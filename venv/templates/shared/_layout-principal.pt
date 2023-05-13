@@ -30,8 +30,11 @@
     <!-- Inicio barra de información de usuario -->
     <div class="container-fluid site-header">
         <div class="row align-items-center">
-            <div class="col-12 text-sm-start text-lg-end">
-            ${login}<span tal:condition="nom_carrera"> (</span>${nom_carrera}<span tal:condition="nom_carrera">)</span><a href="/"><i tal:condition="autenticado" data-toggle="tooltip" data-placement="top" title="Salir" class="ps-2 bi bi-x-circle"></i></a>
+            <div class="col-6 text-start">
+                <span tal:condition="esta_conectado"><h5>Año ${ano_academ}</h5></span>
+            </div>
+            <div class="col-6 text-end">
+                <span tal:condition="esta_conectado">${login}</span><span tal:condition="esta_conectado and nom_carrera"> (${nom_carrera})</span><a tal:condition="esta_conectado" href="/logout"><i data-toggle="tooltip" data-placement="top" title="Salir" class="ps-2 bi bi-x-circle"></i></a>
             </div>
         </div>
     </div>
@@ -43,13 +46,15 @@
             <div class="col-12 text-start">
 
                 <!-- Inicio navbar menú administrador de sistema -->
-                <nav tal:condition="cod_perfil == 0" class="navbar navbar-expand-lg site-header">
+                <nav class="navbar navbar-expand-lg site-header">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#"><h1><b>DuocUC</b></h1></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+                        <!-- Inicio menú administrador de sistema -->
+                        <div tal:condition="esta_conectado and cod_perfil == 0" class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,18 +91,10 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                </nav>
-                <!-- Fin navbar menú administrador de sistema -->
+                        <!-- Fin menú administrador de sistema -->
 
-                <!-- Inicio navbar menú administrador de carreras -->
-                <nav tal:condition="cod_perfil == 1" class="navbar navbar-expand-lg site-header">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#"><h1><b>DuocUC</b></h1></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <!-- Inicio menú administrador de carrera -->
+                        <div tal:condition="esta_conectado and cod_perfil == 1" class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -132,18 +129,10 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                </nav>
-                <!-- Fin navbar menú administrador de carreras -->
+                        <!-- Fin menú administrador de carrera -->
 
-                <!-- Inicio navbar menú docente -->
-                <nav tal:condition="cod_perfil == 2" class="navbar navbar-expand-lg site-header">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#"><h1><b>DuocUC</b></h1></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <!-- Inicio menú docente -->
+                        <div tal:condition="esta_conectado and cod_perfil == 2" class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -163,10 +152,10 @@
                                 </li>
                             </ul>
                         </div>
+                        <!-- Fin menú docente -->
+
                     </div>
                 </nav>
-                <!-- Fin navbar menú decente -->
-
 
             </div>
         </div>

@@ -10,17 +10,25 @@
                     <div class="col-3"></div>
                     <div class="destacado col-6">
 
-                        <form class="py-4" action="/principal/0/">
+                        <form class="py-4" action="/login" method="post">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Login</label>
-                            <input maxlength="40" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                            <label for="login" class="form-label">Login</label>
+                            <input tal:condition="login" name="login" maxlength="40" type="email" class="form-control" id="login" aria-describedby="emailHelp" value="${login}">
+                            <input tal:condition="not login" name="login" maxlength="40" type="email" class="form-control" id="login" aria-describedby="emailHelp" value="${login}" autofocus>
                         </div>
                         <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contraseña</label>
-                            <input maxlength="40" type="password" class="form-control" id="contrasena">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input tal:condition="login" name="password" maxlength="40" type="password" class="form-control" id="password" autofocus>
+                            <input tal:condition="not login" name="password" maxlength="40" type="password" class="form-control" id="password">
                         </div>
                         <button type="submit" class="btn btn-warning pb-2">Ingresar</button>
                         </form>
+
+
+                        <div tal:condition="msg_error" class="alert alert-danger" role="alert">
+                            <b>Error</b>: ${msg_error}
+                        </div>
+
 
                     </div>
                     <div class="col-3"></div>

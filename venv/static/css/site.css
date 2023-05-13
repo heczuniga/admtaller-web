@@ -53,8 +53,7 @@ footer a:hover {
     background-color: #006dad;
 }
 
-.datos {
-    color: darkslategrey;
-    background-color: #ececec;
-
+.title {
+    color: #0073b7;
+    background-color: #e9ecef;
 }
