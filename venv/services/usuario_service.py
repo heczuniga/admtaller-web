@@ -14,6 +14,8 @@ def get_id_usuario_by_login(login: str) -> Optional[int]:
     if login == "maalvarez@duoc.cl":
         return 3
 
+    return None
+
 def autenticacion(login: str, password: str) -> Optional[Usuario]:
     if login == "admin@duoc.cl" and password == "admin":
         return Usuario(1, "admin@duoc.cl", "admin", "Adminstrador", "sistema", "", "")
@@ -46,7 +48,7 @@ def get_ano_academ(id_usuario: int) -> Optional[int]:
 
 def get_nom_carrera(id_usuario: int) -> Optional[str]:
     if id_usuario == 1:
-        return "(sin carrera)"
+        return ""
 
     if id_usuario == 2:
         return "Gastronomía"

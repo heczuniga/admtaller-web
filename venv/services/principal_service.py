@@ -5,12 +5,11 @@ from data.dashboard import Dashboard
 
 
 def get_dashboard(id_usuario: int) -> List[Dashboard]:
-    
     nc: str = None    
     d: List[Dashboard] = []
     r: List[Resumen] = []
 
-    if id_usuario == 1:    
+    if id_usuario == 1:
         nc = "Gastronomía"
         r = [
                 {

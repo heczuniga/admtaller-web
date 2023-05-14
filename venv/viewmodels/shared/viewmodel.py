@@ -4,23 +4,20 @@ from starlette.requests import Request
 
 from infrastructure import cookie_autoriz
 
-# Se genera el viemodel base que permite recuperar sus datos e información
-# del error con un simple to_dict()
-class ViewModelBase:
 
+# Se genera el viemodel base que permite recuperar sus datos e información del error con un simple to_dict()
+class ViewModelBase:
     def __init__(self, request: Request):
 
-        # Se aprovecha que al setear el request, FastAPI transforma
-        # todo a un diccionario JSON
+        # Se aprovecha que al setear el request, FastAPI transforma todo a un diccionario JSON
         self.request: Request = request
 
         # Para retornar errores
-        self.cod_error: Optional[int] = None
         self.msg_error: Optional[str] = None
 
         # Indicador de si está o no con una sesión activa en el sistema
         # Se obtendrá de las cookies
-        self.esta_conectado: bool = (False if cookie_autoriz.get_id_usuario_cookie(self.request) == None else True)
+        self.esta_conectado: bool = (False if cookie_autoriz.get_id_usuario_cookie(self.request) is None else True)
 
         # Identificadores del usuario que usa el viewmodel
         self.id_usuario: Optional[int] = cookie_autoriz.get_id_usuario_cookie(self.request)

@@ -44,7 +44,7 @@
                 <!-- Inicio navbar menú administrador de sistema -->
                 <nav class="navbar navbar-expand-lg site-header">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#"><h1><b>DuocUC</b></h1></a>
+                        <a class="navbar-brand" href="/"><h1><b>DuocUC</b></h1></a>
                     </div>
                 </nav>
                 <!-- Fin navbar menú administrador de sistema -->

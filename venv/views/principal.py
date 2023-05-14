@@ -12,4 +12,3 @@ router = fastapi.APIRouter()
 def principal(request: Request):
     vm: PrincipalViewModel = PrincipalViewModel(request)
     return vm.to_dict()
-
