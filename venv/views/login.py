@@ -14,6 +14,11 @@ router = fastapi.APIRouter()
 @template(template_file="login/login.pt")
 async def login_get(request: Request):
     vm = LoginViewModel(request)
+
+    # Si hay errores, recarga el mismo formulario con los datos ingresados
+    if vm.msg_error:
+        return vm.to_dict()
+
     return vm.to_dict()
 
 
@@ -30,13 +35,13 @@ async def login_post(request: Request):
         return vm.to_dict()
 
     # Si no hay errores, se redirecciona a la página principal
-    resp = fastapi.responses.RedirectResponse('/principal', status_code=status.HTTP_302_FOUND)
+    response = fastapi.responses.RedirectResponse('/principal', status_code=status.HTTP_302_FOUND)
 
     # Luego seteamos la cookie con los datos relevantes del usuario
-    cookie_autoriz.set_autoriz_cookie(resp, vm.id_usuario, vm.login, vm.cod_perfil, vm.ano_academ, vm.nom_carrera)
+    cookie_autoriz.set_autoriz_cookie(response, vm.id_usuario, vm.login, vm.cod_perfil, vm.ano_academ, vm.nom_carrera)
 
     # Se retorna el diccionario entregado por el redirect hacia la página principal
-    return resp
+    return response
 
 
 @router.get("/logout")

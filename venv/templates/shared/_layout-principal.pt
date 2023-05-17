@@ -167,7 +167,30 @@
 
 <!-- Inicio zona de contenido principal a insertar -->
 <div class="main_content py-4">
+
+    <!-- Inicio zona mensaje de error por no tener acceso al sistema  -->
+    <div class="container" tal:condition="not esta_conectado" tal:omit-tag="False">
+        <div class="row align-items-center">
+
+            <div >
+                <div class="card border-0">
+                    <h5 class="card-header destacado">Acceso denegado</h5>
+                    <div class="card-body title">
+                        <h5 class="card-title">No se puede acceder a las funcionalidades del sistema</h5>
+                        <p class="card-text">${msg_error}</p>
+                        <a href="/login" class="btn btn-warning">Ingresar</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Fin zona mensaje de error por no tener acceso al sistema  -->
+
+    <!-- Inicio zona de contenido de la página  -->
     <div metal:define-slot="content" tal:omit-tag="True">Sin contenido</div>
+    <!-- Fin zona de contenido de la página  -->
+
 </div>
 <!-- Fin zona de contenido principal a insertar -->
 

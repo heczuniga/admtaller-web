@@ -1,59 +1,103 @@
 
 from typing import Optional
-from data.usuario import Usuario
-from data.perfil import Perfil
+import httpx
+from httpx import Response
+from infrastructure.constants import APITaller
 
 
-def get_id_usuario_by_login(login: str) -> Optional[int]:
-    if login == "admin@duoc.cl":
-        return 1
+async def get_id_usuario_by_login(login: str) -> Optional[int]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/usuario/login/{login}"
 
-    if login == "jmoya@duoc.cl":
-        return 2
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
 
-    if login == "maalvarez@duoc.cl":
-        return 3
-
-    return None
-
-def autenticacion(login: str, password: str) -> Optional[Usuario]:
-    if login == "admin@duoc.cl" and password == "admin":
-        return Usuario(1, "admin@duoc.cl", "admin", "Adminstrador", "sistema", "", "")
-
-    if login == "jmoya@duoc.cl" and password == "jmoya":
-        return Usuario(2, "jmoya@duoc.cl", "jmoya", "Moya", "Plaza", "Jéssica", "Jéssica")
-
-    if login == "maalvarez@duoc.cl" and password == "maalvarez":
-        return Usuario(3, "maalvarez@duoc.cl", "maalvarez", "Álvarez", "Peña", "Marco", "Marco")
-
-    return None
+    # Si todo está correcto, Retornamos la respuesta de la API
+    id_usuario: int = response.json()["id_usuario"]
+    return id_usuario
 
 
-def get_perfil(id_usuario: int) -> Optional[Perfil]:
-    if id_usuario == 1:
-        return Perfil(0, "Administrador TI", "Administrador desde el punto de vista TI del sistema. En resumen, tiene acceso a todo. Es el alfa y el omega del sistema.")
+async def autenticacion(login: str, password: str) -> Optional[dict]:
+    autenticacion = {
+        "login": login,
+        "password": password,
+        "autenticado": False,
+    }
 
-    if id_usuario == 2:
-        return Perfil(1, "Administrador de carrera", "Administrador de entidades del sistema, usuarios y perfiles. También accede a reportes de gestión.")
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/autenticacion"
 
-    if id_usuario == 3:
-        return Perfil(2, "Docente", "Docentes de la carrera responsables de la ejecución del taller.")
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.post(url, json=autenticacion, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
 
-    return None
+    # Si todo está correcto, Retornamos la respuesta de la API
+    autenticacion = response.json()
+    return autenticacion
 
 
-def get_ano_academ(id_usuario: int) -> Optional[int]:
-    return 2023
+async def get_perfil(id_usuario: int) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/perfil/usuario/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    perfil = response.json()
+    return perfil
 
 
-def get_nom_carrera(id_usuario: int) -> Optional[str]:
-    if id_usuario == 1:
+async def get_ano_academ() -> Optional[int]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/param/ano_academ/valor"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    ano_academ: int = response.json()["ano_academ"]
+    return ano_academ
+
+
+async def get_nom_carrera(id_usuario: int) -> Optional[str]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/perfil/nom_carrera/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    nom_carrera: str = response.json()["nom_carrera"]
+    if not nom_carrera:
         return ""
-
-    if id_usuario == 2:
-        return "Gastronomía"
-
-    if id_usuario == 3:
-        return "Gastronomía"
-
-    return None
+    return nom_carrera.strip()

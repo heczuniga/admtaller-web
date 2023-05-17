@@ -9,6 +9,8 @@ router = fastapi.APIRouter()
 
 @router.get("/principal")
 @template()
-def principal(request: Request):
-    vm: PrincipalViewModel = PrincipalViewModel(request)
+async def principal(request: Request):
+    vm = PrincipalViewModel(request)
+    await vm.load()
+
     return vm.to_dict()

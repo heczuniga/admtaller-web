@@ -4,3 +4,5 @@ uvicorn
 aiofiles
 fastapi-chameleon
 python-multipart
+requests
+httpx

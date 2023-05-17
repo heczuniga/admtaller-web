@@ -21,8 +21,8 @@
                             <input tal:condition="login" name="password" maxlength="40" type="password" class="form-control" id="password" autofocus required placeholder="(Ingrese contraseña)" maxlength="40">
                             <input tal:condition="not login" name="password" maxlength="40" type="password" class="form-control" id="password" required placeholder="(Ingrese contraseña)" maxlength="40">
                         </div>
-                        <button type="submit" class="btn btn-warning pb-2 me-2">Aceptar</button>
-                        <a class="btn btn-light pb-2 me-2" href="/">Cancelar</a>
+                        <button type="submit" class="btn btn-warning ps-3 pe-3 pb-2 me-2">Aceptar</button>
+                        <a class="btn btn-secondary ps-3 pr-3 pb-2 me-2" href="/">Cancelar</a>
                         </form>
 
 
