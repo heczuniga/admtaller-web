@@ -61,7 +61,7 @@
                                         Administración
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Usuarios</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/usuario/lista">Usuarios</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="#">Talleres</a></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="#">Programación</a></li>
@@ -101,7 +101,7 @@
                                         Administración
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Usuarios</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/usuarios/lista">Usuarios</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="#">Talleres</a></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="#">Programación</a></li>

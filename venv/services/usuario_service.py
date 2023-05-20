@@ -101,3 +101,75 @@ async def get_nom_carrera(id_usuario: int) -> Optional[str]:
     if not nom_carrera:
         return ""
     return nom_carrera.strip()
+
+
+async def get_usuarios_lista() -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/usuario/lista"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    usuarios = response.json()
+    return usuarios
+
+
+async def delete_usuario(id_usuario: int) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/usuario/eliminar/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.delete(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    eliminacion = response.json()
+    return eliminacion
+
+
+async def get_usuario(id_usuario: int) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/usuario/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    usuario = response.json()
+    return usuario
+
+
+async def update_usuario(usuario: dict, id_usuario: int) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE}/usuario/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.put(url, json=usuario, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    usuario = response.json()
+    return usuario

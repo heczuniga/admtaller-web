@@ -25,7 +25,6 @@ async def login_get(request: Request):
 @router.post("/login")
 @template(template_file="login/login.pt")
 async def login_post(request: Request):
-
     # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
     vm = LoginViewModel(request)
     await vm.load()
@@ -35,7 +34,7 @@ async def login_post(request: Request):
         return vm.to_dict()
 
     # Si no hay errores, se redirecciona a la página principal
-    response = fastapi.responses.RedirectResponse('/principal', status_code=status.HTTP_302_FOUND)
+    response = fastapi.responses.RedirectResponse("/principal", status_code=status.HTTP_302_FOUND)
 
     # Luego seteamos la cookie con los datos relevantes del usuario
     cookie_autoriz.set_autoriz_cookie(response, vm.id_usuario, vm.login, vm.cod_perfil, vm.ano_academ, vm.nom_carrera)

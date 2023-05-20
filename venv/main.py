@@ -7,6 +7,7 @@ from starlette.staticfiles import StaticFiles
 from views import index
 from views import login
 from views import principal
+from views import usuario
 
 app = fastapi.FastAPI()
 
@@ -19,6 +20,7 @@ def configura_routers():
     app.include_router(index.router)
     app.include_router(login.router)
     app.include_router(principal.router)
+    app.include_router(usuario.router)
 
 
 # Método de configuración de templates

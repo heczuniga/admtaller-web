@@ -55,5 +55,18 @@ footer a:hover {
 
 .title {
     color: #0073b7;
-    background-color: hsl(210, 16%, 93%);
+    background-color: #eaedf0;
+}
+
+.tabla-encabezado {
+    color: whitesmoke;
+    background-color: #0073b7;
+}
+
+.table-striped-custom tbody tr:nth-of-type(odd) {
+    background-color: #f0f8ff;
+}
+
+.table-striped-custom tbody tr:nth-of-type(even) {
+    background-color: white;
 }

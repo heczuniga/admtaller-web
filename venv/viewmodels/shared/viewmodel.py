@@ -12,8 +12,9 @@ class ViewModelBase:
         # Se aprovecha que al setear el request, FastAPI transforma todo a un diccionario JSON
         self.request: Request = request
 
-        # Para retornar errores
+        # Para retornar errores y mensajes de éxito
         self.msg_error: Optional[str] = None
+        self.msg_exito: Optional[str] = None
 
         # Indicador de si está o no con una sesión activa en el sistema
         # Se obtendrá de las cookies
@@ -31,6 +32,9 @@ class ViewModelBase:
 
         # La carrera a la que pertenece el usuario
         self.nom_carrera: Optional[str] = cookie_autoriz.get_nom_carrera_cookie(self.request)
+
+        # Método del request. ütil para saber cuándo mostrar mensajes de grabación exitosos
+        self.method = request.method
 
     # Salida en formato diccionario (JSON)
     def to_dict(self) -> dict:
