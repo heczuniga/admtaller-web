@@ -3,11 +3,12 @@ from typing import List
 from infrastructure.constants import APITaller
 import httpx
 from httpx import Response
+from httpx import Request
 
 
-async def get_carrera_lista() -> List[dict]:
+async def get_carrera_lista(request: Request, id_usuario: int) -> List[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/carrera/lista"
+    url = f"{APITaller.URL_BASE}/carrera/lista/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:

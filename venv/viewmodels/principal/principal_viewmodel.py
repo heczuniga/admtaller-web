@@ -15,6 +15,6 @@ class PrincipalViewModel(ViewModelBase):
     # Función que carga datos que verifica si está conectado al sistema
     async def load(self):
         if self.esta_conectado:
-            self.dashboard = await principal_service.get_dashboard(self.id_usuario)
+            self.dashboard = await principal_service.get_dashboard(self.id_usuario_conectado)
         else:
             self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"

@@ -21,7 +21,7 @@ async def usuarios_lista(request: Request):
 
 @router.get("/usuario/eliminar/{id_usuario}")
 async def eliminar_usuario(request: Request, id_usuario: int):
-    eliminacion = await usuario_service.delete_usuario(id_usuario)
+    eliminacion = await usuario_service.delete_usuario(request, id_usuario)
 
     if eliminacion["eliminado"]:
         # Si no hay errores, se redirecciona a la página principal

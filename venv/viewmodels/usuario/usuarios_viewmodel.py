@@ -15,6 +15,6 @@ class UsuariosViewModel(ViewModelBase):
     # Función que carga datos y verifica si está conectado al sistema
     async def load(self):
         if self.esta_conectado:
-            self.usuarios = await usuario_service.get_usuarios_lista()
+            self.usuarios = await usuario_service.get_usuarios_lista(self.id_usuario_conectado)
         else:
             self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"

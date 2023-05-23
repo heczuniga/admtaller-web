@@ -62,8 +62,8 @@ class UsuarioViewModel(ViewModelBase):
 
     async def load(self, id_usuario):
         if self.esta_conectado:
-            self.usuario = await usuario_service.get_usuario(id_usuario)
-            self.lista_perfil = await perfil_service.get_perfil_lista()
-            self.lista_carrera = await carrera_service.get_carrera_lista()
+            self.usuario = await usuario_service.get_usuario(self.request, id_usuario)
+            self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
+            self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
         else:
             self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"

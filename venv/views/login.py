@@ -38,7 +38,6 @@ async def login_post(request: Request):
 
     # Luego seteamos la cookie con los datos relevantes del usuario
     cookie_autoriz.set_autoriz_cookie(response, vm.id_usuario, vm.login, vm.cod_perfil, vm.ano_academ, vm.nom_carrera)
-
     # Se retorna el diccionario entregado por el redirect hacia la página principal
     return response
 

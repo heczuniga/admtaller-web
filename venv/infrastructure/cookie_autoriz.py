@@ -19,7 +19,7 @@ def set_autoriz_cookie(response: Response, id_usuario: int, login: str, cod_perf
 
 # Retorna un texto "enciptado" que se usa para almacenar la password en la cookie y que no sea visible
 def __hash_text(text: str) -> str:
-    text: str = "entropia__" + text + "__universal"
+    text: str = "entropía__" + text + "__universal"
     return hashlib.sha512(text.encode("utf-8")).hexdigest()
 
 
@@ -98,7 +98,7 @@ def get_nom_carrera_cookie(request: Request) -> Optional[str]:
         return None
 
     nom_carrera = dict["nom_carrera"]
-    if nom_carrera is None:
+    if not nom_carrera:
         nom_carrera = ""
     return nom_carrera
 

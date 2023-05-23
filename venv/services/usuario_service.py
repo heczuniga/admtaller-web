@@ -1,8 +1,10 @@
 
 from typing import Optional
 import httpx
+from httpx import Request
 from httpx import Response
 from infrastructure.constants import APITaller
+from infrastructure import cookie_autoriz
 
 
 async def get_id_usuario_by_login(login: str) -> Optional[int]:
@@ -103,9 +105,9 @@ async def get_nom_carrera(id_usuario: int) -> Optional[str]:
     return nom_carrera.strip()
 
 
-async def get_usuarios_lista() -> Optional[dict]:
+async def get_usuarios_lista(id_usuario: int) -> Optional[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/lista"
+    url = f"{APITaller.URL_BASE}/usuario/lista/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -121,9 +123,13 @@ async def get_usuarios_lista() -> Optional[dict]:
     return usuarios
 
 
-async def delete_usuario(id_usuario: int) -> Optional[dict]:
+async def delete_usuario(request: Request, id_usuario_eliminar: int) -> Optional[dict]:
+
+    # Recuperamos el usuario conectado desde la cookie para pasarlo a los servicios como parámetro para segmentar datos
+    id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
+
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/eliminar/{id_usuario}"
+    url = f"{APITaller.URL_BASE}/usuario/eliminar/{id_usuario_eliminar}?id_usuario={id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -139,9 +145,13 @@ async def delete_usuario(id_usuario: int) -> Optional[dict]:
     return eliminacion
 
 
-async def get_usuario(id_usuario: int) -> Optional[dict]:
+async def get_usuario(request: Request, id_usuario_get: int) -> Optional[dict]:
+
+    # Recuperamos el usuario conectado desde la cookie para pasarlo a los servicios como parámetro para segmentar datos
+    id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
+
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/{id_usuario}"
+    url = f"{APITaller.URL_BASE}/usuario/{id_usuario_get}/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -157,9 +167,10 @@ async def get_usuario(id_usuario: int) -> Optional[dict]:
     return usuario
 
 
-async def update_usuario(usuario: dict, id_usuario: int) -> Optional[dict]:
+async def update_usuario(usuario: dict, id_usuario_modificar: int) -> Optional[dict]:
+
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/{id_usuario}"
+    url = f"{APITaller.URL_BASE}/usuario/{id_usuario_modificar}"
 
     async with httpx.AsyncClient() as client:
         try:
