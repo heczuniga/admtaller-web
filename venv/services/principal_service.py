@@ -7,7 +7,7 @@ from httpx import Response
 
 async def get_dashboard(id_usuario: int) -> List[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/principal/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/principal/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:

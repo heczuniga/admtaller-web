@@ -36,8 +36,8 @@
                                         <div class="row pb-3">
                                             <div class="col-1">
                                                 <div class="form-group">
-                                                    <label for="id_usuario" class="form-label">Id</label>
-                                                    <input name="id_usuario" maxlength="40" type="number" class="form-control" id="id_usuario" aria-describedby="emailHelp" value="${usuario.id_usuario}" displayonly maxlength="40">
+                                                    <label for="id_usuario" class="form-label d-none">Id</label>
+                                                    <input name="id_usuario" maxlength="40" type="number" type="hidden" class="form-control d-none" id="id_usuario" aria-describedby="emailHelp" value="${usuario.id_usuario}" maxlength="40">
                                                 </div>
                                             </div>
                                             <div class="col-11"></div>

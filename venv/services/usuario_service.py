@@ -9,7 +9,7 @@ from infrastructure import cookie_autoriz
 
 async def get_id_usuario_by_login(login: str) -> Optional[int]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/login/{login}"
+    url = f"{APITaller.URL_BASE.value}/usuario/login/{login}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -33,7 +33,7 @@ async def autenticacion(login: str, password: str) -> Optional[dict]:
     }
 
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/autenticacion"
+    url = f"{APITaller.URL_BASE.value}/autenticacion"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -51,7 +51,7 @@ async def autenticacion(login: str, password: str) -> Optional[dict]:
 
 async def get_perfil(id_usuario: int) -> Optional[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/perfil/usuario/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/perfil/usuario/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -69,7 +69,7 @@ async def get_perfil(id_usuario: int) -> Optional[dict]:
 
 async def get_ano_academ() -> Optional[int]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/param/ano_academ/valor"
+    url = f"{APITaller.URL_BASE.value}/param/ano_academ/valor"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -87,7 +87,7 @@ async def get_ano_academ() -> Optional[int]:
 
 async def get_nom_carrera(id_usuario: int) -> Optional[str]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/perfil/nom_carrera/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/perfil/nom_carrera/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -107,7 +107,7 @@ async def get_nom_carrera(id_usuario: int) -> Optional[str]:
 
 async def get_usuarios_lista(id_usuario: int) -> Optional[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/lista/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/usuario/lista/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -129,7 +129,7 @@ async def delete_usuario(request: Request, id_usuario_eliminar: int) -> Optional
     id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
 
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/eliminar/{id_usuario_eliminar}?id_usuario={id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/usuario/eliminar/{id_usuario_eliminar}?id_usuario={id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -151,7 +151,7 @@ async def get_usuario(request: Request, id_usuario_get: int) -> Optional[dict]:
     id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
 
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/{id_usuario_get}/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/usuario/{id_usuario_get}/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -170,11 +170,30 @@ async def get_usuario(request: Request, id_usuario_get: int) -> Optional[dict]:
 async def update_usuario(usuario: dict, id_usuario_modificar: int) -> Optional[dict]:
 
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE}/usuario/{id_usuario_modificar}"
+    url = f"{APITaller.URL_BASE.value}/usuario/{id_usuario_modificar}"
 
     async with httpx.AsyncClient() as client:
         try:
             response: Response = await client.put(url, json=usuario, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    usuario = response.json()
+    return usuario
+
+
+async def insert_usuario(usuario: dict) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/usuario"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.post(url, json=usuario, follow_redirects=True)
             response.raise_for_status()
         except httpx.HTTPStatusError as e:
             raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")

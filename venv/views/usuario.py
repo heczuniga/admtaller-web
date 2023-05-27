@@ -12,7 +12,7 @@ router = fastapi.APIRouter()
 
 @router.get("/usuario/lista")
 @template(template_file="usuario/usuario_lista.pt")
-async def usuarios_lista(request: Request):
+async def usuario_lista(request: Request):
     vm = UsuariosViewModel(request)
     await vm.load()
 
@@ -30,28 +30,53 @@ async def eliminar_usuario(request: Request, id_usuario: int):
     return response
 
 
+@router.get("/usuario")
+@template(template_file="usuario/usuario_modificar.pt")
+async def usuario_new(request: Request):
+    vm = UsuarioViewModel(request)
+    await vm.load_empty()
+    return vm.to_dict()
+
+
 @router.get("/usuario/{id_usuario}")
-@template(template_file="usuario/usuario.pt")
+@template(template_file="usuario/usuario_modificar.pt")
 async def usuario(request: Request, id_usuario: int):
     vm = UsuarioViewModel(request)
     await vm.load(id_usuario=id_usuario)
-
     return vm.to_dict()
 
 
 @router.post("/usuario/{id_usuario}")
-@template(template_file="usuario/usuario.pt")
+@template(template_file="usuario/usuario_modificar.pt")
 async def usuario_put(request: Request, id_usuario: int):
     # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
     vm = UsuarioViewModel(request)
-    await vm.save()
+    await vm.update()
 
     # Si hay errores, recarga el mismo formulario con los datos ingresados
     if vm.msg_error:
         return vm.to_dict()
 
     # Se carga el formulario con los datos
-    await vm.load(id_usuario)
+    await vm.load(id_usuario=id_usuario)
+
+    # Se retorna el diccionario entregado por el redirect hacia la página principal
+    return vm.to_dict()
+
+
+@router.post("/usuario")
+@template(template_file="usuario/usuario_modificar.pt")
+async def usuario_post(request: Request):
+    # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
+    vm = UsuarioViewModel(request)
+    await vm.insert()
+
+    # Si hay errores, recarga el mismo formulario con los datos ingresados
+    if vm.msg_error:
+        return vm.to_dict()
+
+    # Se carga el formulario con los datos
+    await vm.load(id_usuario=vm.id_usuario)
 
     # Se retorna el diccionario entregado por el redirect hacia la página principal
     return vm.to_dict()
