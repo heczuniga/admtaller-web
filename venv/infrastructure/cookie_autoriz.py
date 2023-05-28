@@ -1,10 +1,10 @@
 
-import hashlib
 from typing import Optional
 from starlette.requests import Request
 from starlette.responses import Response
 
 from infrastructure.num_conversion import convierte_entero
+from infrastructure.hash import hash_text
 
 # Nombre de la cookie a ser usada
 autoriz_cookie: str = "cookie_admtaller"
@@ -12,15 +12,9 @@ autoriz_cookie: str = "cookie_admtaller"
 
 # Setea la cookie del autorización al sistema
 def set_autoriz_cookie(response: Response, id_usuario: int, login: str, cod_perfil: int, ano_academ: int, nom_carrera: str):
-    hash_valor: str = __hash_text(str(id_usuario))
+    hash_valor: str = hash_text(str(id_usuario))
     valor: str = "{}:{}:{}:{}:{}:{}".format(id_usuario, login, hash_valor, cod_perfil, ano_academ, nom_carrera)
     response.set_cookie(autoriz_cookie, valor, secure=False, httponly=True, samesite="Lax")
-
-
-# Retorna un texto "enciptado" que se usa para almacenar la password en la cookie y que no sea visible
-def __hash_text(text: str) -> str:
-    text: str = "entropía__" + text + "__universal"
-    return hashlib.sha512(text.encode("utf-8")).hexdigest()
 
 
 def get_usuario_cookie(request: Request):
@@ -32,7 +26,7 @@ def get_usuario_cookie(request: Request):
     if len(parts) != 6:
         return None
 
-    return {
+    usuario_cookie = {
         "id_usuario": parts[0],
         "login": parts[1],
         "hash_valor": parts[2],
@@ -40,6 +34,14 @@ def get_usuario_cookie(request: Request):
         "ano_academ": parts[4],
         "nom_carrera": parts[5],
     }
+
+    hash_val = usuario_cookie["hash_valor"]
+    hash_val_check = hash_text(str(usuario_cookie["id_usuario"]))
+    if hash_val != hash_val_check:
+        print("Error: No hubo éxito al validar la cookie a través del hash. Cookie no válida.")
+        return None
+
+    return usuario_cookie
 
 
 # Retorna el id del usuario conectado desde la cookie

@@ -3,6 +3,7 @@ from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 
 from services import usuario_service
+from infrastructure.hash import hash_text
 
 
 class LoginViewModel(ViewModelBase):
@@ -28,6 +29,9 @@ class LoginViewModel(ViewModelBase):
 
         # Validamos la autenticación
         try:
+
+            # Encriptamos la password para enviarla al servicio de autenticación
+            self.password = hash_text(self.password)
             autenticacion = await usuario_service.autenticacion(self.login, self.password)
 
             if not autenticacion["autenticado"]:
