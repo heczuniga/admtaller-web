@@ -5,6 +5,7 @@ from httpx import Request
 from httpx import Response
 from infrastructure.constants import APITaller
 from infrastructure import cookie_autoriz
+from infrastructure.hash import hash_text
 
 
 async def get_id_usuario_by_login(login: str) -> Optional[int]:
@@ -129,7 +130,7 @@ async def delete_usuario(request: Request, id_usuario_eliminar: int) -> Optional
     id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
 
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE.value}/usuario/eliminar/{id_usuario_eliminar}?id_usuario={id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/usuario/eliminar/{id_usuario_eliminar}/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -203,3 +204,30 @@ async def insert_usuario(usuario: dict) -> Optional[dict]:
     # Si todo está correcto, Retornamos la respuesta de la API
     usuario = response.json()
     return usuario
+
+
+async def cambio_password(request: Request, nueva_password: str, confirmacion_nueva_password: str) -> bool:
+    # Recuperamos el usuario conectado desde la cookie para pasarlo al servicio de cambio de contraseña
+    id_usuario = cookie_autoriz.get_id_usuario_cookie(request)
+
+    cambio_password: dict = {
+        "id_usuario": id_usuario,
+        "nueva_password": hash_text(nueva_password),
+        "confirmacion_password": hash_text(confirmacion_nueva_password),
+        "modificada": False,
+    }
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/autenticacion/password"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.put(url, json=cambio_password, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    cambio_password = response.json()
+    return cambio_password["modificada"]

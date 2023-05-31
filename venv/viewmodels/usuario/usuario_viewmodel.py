@@ -51,12 +51,12 @@ class UsuarioViewModel(ViewModelBase):
         self.cod_perfil = int(form.get("cod-perfil", "").strip())
         self.cod_carrera = int(form.get("cod-carrera", "").strip())
 
-        # TODO: Agregar validaciones
+        # TODO: Agregar validaciones centralizadas en una función única (se usa acá y abajo)
 
         usuario = {
             "id_usuario": self.id_usuario,
             "login": self.login,
-            "hash_password": "Holaslashjdkajdh",
+            "hash_password": "Holaslashjdkajdh", #TODO Esto se ve muy mal. Revisar.
             "primer_apellido": self.primer_apellido,
             "segundo_apellido": self.segundo_apellido,
             "nom": self.nom,
@@ -86,7 +86,7 @@ class UsuarioViewModel(ViewModelBase):
         self.cod_perfil = int(form.get("cod-perfil", "").strip())
         self.cod_carrera = int(form.get("cod-carrera", "").strip())
 
-        # TODO: Agregar validaciones
+        # TODO: Agregar validaciones centralizadas en una función única (se usa arriba)
 
         usuario = {
             "id_usuario": self.id_usuario,

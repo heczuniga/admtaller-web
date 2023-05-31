@@ -34,11 +34,21 @@
                 <span tal:condition="esta_conectado"><h5>Año ${ano_academ}</h5></span>
             </div>
             <div class="col-6 text-end">
-                <span tal:condition="esta_conectado">${login_conectado}</span><span tal:condition="esta_conectado and nom_carrera"> (${nom_carrera})</span><a tal:condition="esta_conectado" href="/logout"><i data-toggle="tooltip" data-placement="top" title="Salir" class="ps-2 bi bi-x-circle"></i></a>
+                <div class="dropdown" tal:condition="esta_conectado">
+                    <button class="btn btn-transparent dropdown-toggle text-light" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>${login_conectado}</span><span tal:condition="esta_conectado and nom_carrera"> (${nom_carrera})</span>
+                    </button>
+                    <ul class="dropdown-menu bg-body-secondary text-dark" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item bg-body-light text-dark" href="/password">Cambiar contraseña</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item bg-body-light text-dark" href="/logout">Salir</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
     <!-- Fin barra de información de usuario -->
+
 
     <!-- Inicio contenedor navbar del sistema -->
     <div class="container-fluid site-header">

@@ -19,7 +19,7 @@ class LoginViewModel(ViewModelBase):
         # Recuperamos los datos desde el formulario
         form = await self.request.form()
         self.login = form.get("login", "").lower().strip()
-        self.password = form.get("password", "").lower().strip()
+        self.password = form.get("password", "")
 
         if not self.login.strip():
             self.msg_error = "Debe ingresar un usuario"
