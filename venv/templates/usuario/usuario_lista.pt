@@ -4,6 +4,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+        $("#modalError").modal('show');
+
         /* Construcción del modal de la confirmación de eliminación */
         $(".btn-secondary").click(function() {
             var id_usuario = $(this).attr("id");
@@ -88,6 +90,24 @@
                             </div>
                         </div>
                         <!-- Fin modal de confirmación de eliminación -->
+
+                        <!-- Inicio modal de error en la eliminación -->
+                        <div tal:condition="msg_error" tal:omit-tag="False" class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modal-error" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="modal-error">Error</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div id="mensaje-modal" class="modal-body">${msg_error}</div>
+                                <div class="modal-footer">
+                                <button id="confirmar-eliminacion" type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Fin modal de confirmación de eliminación -->
+
 
                     </div>
                     <!-- Fin zona visible de usuario conectado -->

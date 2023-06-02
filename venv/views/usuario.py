@@ -1,5 +1,6 @@
 
 import fastapi
+import httpx
 from fastapi_chameleon import template
 from viewmodels.usuario.usuarios_viewmodel import UsuariosViewModel
 from viewmodels.usuario.usuario_viewmodel import UsuarioViewModel
@@ -20,18 +21,25 @@ async def usuario_lista(request: Request):
 
 
 @router.get("/usuario/eliminar/{id_usuario}")
+@template(template_file="usuario/usuario_lista.pt")
 async def eliminar_usuario(request: Request, id_usuario: int):
     eliminacion = await usuario_service.delete_usuario(request, id_usuario)
 
-    if eliminacion["eliminado"]:
-        # Si no hay errores, se redirecciona a la página principal
-        response = fastapi.responses.RedirectResponse("/usuario/lista", status_code=status.HTTP_302_FOUND)
+    if not eliminacion["eliminado"]:
+        vm = UsuariosViewModel(request)
+        await vm.load()
+        vm.msg_error = eliminacion["msg_error"]
 
+        return vm.to_dict()
+
+    # Si no hay errores, se redirecciona a la página principal
+    response = fastapi.responses.RedirectResponse("/usuario/lista", status_code=status.HTTP_302_FOUND)
     return response
 
 
+
 @router.get("/usuario")
-@template(template_file="usuario/usuario_modificar.pt")
+@template(template_file="usuario/usuario.pt")
 async def usuario_new(request: Request):
     vm = UsuarioViewModel(request)
     await vm.load_empty()
@@ -39,7 +47,7 @@ async def usuario_new(request: Request):
 
 
 @router.get("/usuario/{id_usuario}")
-@template(template_file="usuario/usuario_modificar.pt")
+@template(template_file="usuario/usuario.pt")
 async def usuario(request: Request, id_usuario: int):
     vm = UsuarioViewModel(request)
     await vm.load(id_usuario=id_usuario)
@@ -47,7 +55,7 @@ async def usuario(request: Request, id_usuario: int):
 
 
 @router.post("/usuario/{id_usuario}")
-@template(template_file="usuario/usuario_modificar.pt")
+@template(template_file="usuario/usuario.pt")
 async def usuario_put(request: Request, id_usuario: int):
     # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
     vm = UsuarioViewModel(request)
@@ -65,7 +73,7 @@ async def usuario_put(request: Request, id_usuario: int):
 
 
 @router.post("/usuario")
-@template(template_file="usuario/usuario_modificar.pt")
+@template(template_file="usuario/usuario.pt")
 async def usuario_post(request: Request):
     # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
     vm = UsuarioViewModel(request)
