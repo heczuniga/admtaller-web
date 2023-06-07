@@ -3,7 +3,35 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-  
+
+        $('#msg-error-local').hide();
+
+        $('#formulario').submit(function(e) {
+            var isUsuario = $('#id-usuario').val();
+            var password = $('#password').val();
+            var confirmacionPassword = $('#confirmacion-password').val();
+
+            if ((idUsuario === 0) && (password.trim().length === 0) && (confirmacionPassword.trim().length !== 0)) {
+                // Mostrar mensaje de error en la zona de errores
+                var mensajeError = "<b>Error</b>: Debe ingresar la contraseña al usuario"
+
+                $('#msg-error-local').show();
+                $('#msg-error-local').html(mensajeError);
+
+                e.preventDefault(); // Evitar el envío del formulario
+            }
+
+            if ((password !== confirmacionPassword) && ((password.trim().length !== 0) || (confirmacionPassword.trim().length !== 0))) {
+                // Mostrar mensaje de error en la zona de errores
+                var mensajeError = "<b>Error</b>: La confirmación de la contraseña no coincide"
+
+                $('#msg-error-local').show();
+                $('#msg-error-local').html(mensajeError);
+
+                e.preventDefault(); // Evitar el envío del formulario
+            }
+        });
+
       /* Leemos el mensaje para determinar si viene desde la grabación del formulario y mostrar el mensaje de grabación o no */
       method = $("#method").text();
       if (method != "GET") {
@@ -32,12 +60,12 @@
                             <div class="row align-items-center">
                                 <div class="destacado col-12">
 
-                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data" action="/usuario/${usuario.id_usuario}">
+                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data" tal:attributes="action '/usuario' if usuario.id_usuario == 0 else '/usuario/' + str(usuario.id_usuario)">
                                         <div class="row pb-3">
                                             <div class="col-1">
                                                 <div class="form-group">
-                                                    <label for="id_usuario" class="form-label d-none">Id</label>
-                                                    <input name="id_usuario" maxlength="40" type="number" type="hidden" class="form-control d-none" id="id_usuario" aria-describedby="emailHelp" value="${usuario.id_usuario}" maxlength="40">
+                                                    <label for="id-usuario" class="form-label d-none">Id</label>
+                                                    <input name="id-usuario" maxlength="40" type="number" type="hidden" class="form-control d-none" id="id-usuario" aria-describedby="emailHelp" value="${usuario.id_usuario}" maxlength="40">
                                                 </div>
                                             </div>
                                             <div class="col-11"></div>
@@ -96,9 +124,9 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="cod-perfil" class="form-label">Perfil</label>
+                                                    <label for="cod-perfil" class="form-label">Perfil ${usuario.cod_perfil}</label>
                                                     <select name="cod-perfil" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="p lista_perfil" tal:attributes="value p.cod_perfil; selected str(p.cod_perfil) == str(usuario.cod_perfil)">${p.nom_perfil}</option>
+                                                        <option tal:repeat="p lista_perfil" tal:attributes="value p.cod_perfil; selected python:str(p.cod_perfil) == str(usuario.cod_perfil) and 'selected' or None">${p.nom_perfil}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -108,19 +136,53 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="carrera" class="form-label">Carrera</label>
+                                                    <label for="carrera" class="form-label">Carrera  ${usuario.cod_carrera}</label>
                                                     <select name="cod-carrera" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="c lista_carrera" tal:attributes="value c.cod_carrera; selected str(c.cod_carrera) == str(usuario.cod_carrera)">${c.nom_carrera}</option>
+                                                        <option tal:repeat="c lista_carrera" tal:attributes="value c.cod_carrera; selected python:str(c.cod_carrera) == str(usuario.cod_carrera) and 'selected' or None">${c.nom_carrera}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
                                         </div>
 
+                                        <div class="row pb-3">
+                                            <div class="col-4">
+                                                <button tal:condition="usuario.id_usuario != 0" type="button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target="#formularioCollapse" tal:omit-tag="False">
+                                                    Cambiar password
+                                                </button>
+
+                                                <div tal:attributes="class 'collapse show' if usuario.id_usuario == 0 else 'collapse'" id="formularioCollapse">
+                                                    <div tal:attributes="class 'row pb-3' if usuario.id_usuario == 0 else 'row pb-3 pt-3'">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                        <label for="password" class="form-label">Contraseña</label>
+                                                        <input id="password" name="password" maxlength="40" type="password" class="form-control" id="password" aria-describedby="emailHelp" value="" maxlength="40">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8"></div>
+                                                    </div>
+                                                
+                                                    <div class="row pb-3">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                        <label for="confirmacion-password" class="form-label">Confirmar contraseña</label>
+                                                        <input id="confirmacion-password" name="confirmacion-password" maxlength="40" type="password" class="form-control" id="conf-password" aria-describedby="emailHelp" value="" maxlength="40">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                          
                                         <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
                                         <a class="btn btn-secondary" href="/usuario/lista" role="button">Volver</a>
 
                                     </form>
+                                    <div id="msg-error-local" class="alert alert-danger" role="alert">
+                             
+                                    </div>
                                     <div id="anchor-error"></div>
                                     <div id="msg-error" tal:condition="msg_error" class="alert alert-danger" role="alert">
                                         ${msg_error}
