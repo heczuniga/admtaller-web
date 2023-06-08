@@ -10,6 +10,13 @@
 
                     <!-- Inicio zona visible de usuario conectado -->
                     <div tal:condition="esta_conectado" tal:omit-tag="True">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="section-title">Título sección</h4>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- Fin zona visible de usuario conectado -->
 

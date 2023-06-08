@@ -55,6 +55,12 @@
                     <!-- Inicio zona visible de usuario conectado -->
                     <div tal:condition="esta_conectado" tal:omit-tag="True">
 
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="section-title">Parámetro</h4>
+                            </div>
+                        </div>
+
                         <div class="container-fluid">
                             <!-- Definir primero columnas de bootstrap -->
                             <div class="row align-items-center">

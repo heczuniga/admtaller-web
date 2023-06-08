@@ -44,5 +44,3 @@ async def usuario_put(request: Request, cod_param: int):
 
     # Se retorna el diccionario entregado por el redirect hacia la página principal
     return vm.to_dict()
-
-

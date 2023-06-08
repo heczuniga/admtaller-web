@@ -91,6 +91,7 @@ class UsuarioViewModel(ViewModelBase):
         if await self.validate():
             # Encriptamos la password antes de pasarla al servicio
             self.hash_password = hash_text(self.hash_password)
+            self.usuario["hash_password"] = self.hash_password
 
             self.usuario = await usuario_service.update_usuario(self.request, self.usuario)
 
@@ -129,6 +130,7 @@ class UsuarioViewModel(ViewModelBase):
         if await self.validate():
             # Encriptamos la password antes de pasarla al servicio
             self.hash_password = hash_text(self.hash_password)
+            self.usuario["hash_password"] = self.hash_password
 
             self.usuario = await usuario_service.insert_usuario(self.usuario)
 

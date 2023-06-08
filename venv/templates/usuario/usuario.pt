@@ -7,7 +7,7 @@
         $('#msg-error-local').hide();
 
         $('#formulario').submit(function(e) {
-            var isUsuario = $('#id-usuario').val();
+            var idUsuario = $('#id-usuario').val();
             var password = $('#password').val();
             var confirmacionPassword = $('#confirmacion-password').val();
 
@@ -54,6 +54,12 @@
 
                     <!-- Inicio zona visible de usuario conectado -->
                     <div tal:condition="esta_conectado" tal:omit-tag="True">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="section-title">Usuario</h4>
+                            </div>
+                        </div>
 
                         <div class="container-fluid">
                             <!-- Definir primero columnas de bootstrap -->
@@ -124,7 +130,7 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="cod-perfil" class="form-label">Perfil ${usuario.cod_perfil}</label>
+                                                    <label for="cod-perfil" class="form-label">Perfil</label>
                                                     <select name="cod-perfil" class="form-select" aria-label="Default select example">
                                                         <option tal:repeat="p lista_perfil" tal:attributes="value p.cod_perfil; selected python:str(p.cod_perfil) == str(usuario.cod_perfil) and 'selected' or None">${p.nom_perfil}</option>
                                                     </select>
@@ -136,7 +142,7 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="carrera" class="form-label">Carrera  ${usuario.cod_carrera}</label>
+                                                    <label for="carrera" class="form-label">Carrera</label>
                                                     <select name="cod-carrera" class="form-select" aria-label="Default select example">
                                                         <option tal:repeat="c lista_carrera" tal:attributes="value c.cod_carrera; selected python:str(c.cod_carrera) == str(usuario.cod_carrera) and 'selected' or None">${c.nom_carrera}</option>
                                                     </select>

@@ -70,3 +70,9 @@ footer a:hover {
 .table-striped-custom tbody tr:nth-of-type(even) {
     background-color: white;
 }
+
+.section-title {
+    font-weight: bold;
+    color: #0073b7;
+    background-color: white;
+}
