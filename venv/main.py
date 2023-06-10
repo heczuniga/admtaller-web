@@ -1,7 +1,6 @@
 
 import fastapi
 import fastapi_chameleon
-from fastapi_chameleon import template
 from starlette.staticfiles import StaticFiles
 
 from views import index

@@ -4,8 +4,6 @@ from fastapi_chameleon import template
 from viewmodels.param.params_viewmodel import ParamsViewModel
 from viewmodels.param.param_viewmodel import ParamViewModel
 from starlette.requests import Request
-from starlette import status
-from services import usuario_service
 
 router = fastapi.APIRouter()
 
@@ -25,7 +23,6 @@ async def usuario(request: Request, cod_param: int):
     vm = ParamViewModel(request)
     await vm.load(cod_param=cod_param)
     return vm.to_dict()
-
 
 
 @router.post("/param/{cod_param}")

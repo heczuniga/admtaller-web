@@ -1,6 +1,5 @@
 
 import fastapi
-import httpx
 from fastapi_chameleon import template
 from viewmodels.usuario.usuarios_viewmodel import UsuariosViewModel
 from viewmodels.usuario.usuario_viewmodel import UsuarioViewModel

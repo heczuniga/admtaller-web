@@ -22,7 +22,6 @@ class ParamViewModel(ViewModelBase):
         self.param: dict
 
     async def validate(self) -> bool:
-        print(convierte_entero(self.valor))
         # Verificar si el parámetro 1 es un año válido
         if convierte_entero(self.valor) == 0 and self.cod_param == 1:
             self.msg_error = "El parámetro debe ser un valor entero"

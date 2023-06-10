@@ -6,12 +6,11 @@ from httpx import Response
 from infrastructure.constants import APITaller
 from infrastructure import cookie_autoriz
 from infrastructure.hash import hash_text
-from fastapi import status
 
 
 async def get_id_usuario_by_login(login: str) -> Optional[int]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE.value}/usuario/login/{login}"
+    url = f"{APITaller.URL_BASE.value}/usuario/id_usuario/{login}"
 
     async with httpx.AsyncClient() as client:
         try:
