@@ -20,22 +20,6 @@
                     </div>
                     <!-- Fin zona visible de usuario conectado -->
 
-
-                    <!-- Inicio zona mensaje de error por no estar conectado al sistema  -->
-                    <div tal:condition="not esta_conectado" tal:omit-tag="True">
-
-                        <div class="card border-0">
-                        <h5 class="card-header destacado">Acceso denegado</h5>
-                        <div class="card-body title">
-                            <h5 class="card-title">Error de autenticación</h5>
-                            <p class="card-text">Debe estar conectado al sistema.</p>
-                            <a href="/login" class="btn btn-warning">Ingresar</a>
-                        </div>
-                        </div>
-
-                    </div>
-                    <!-- Fin zona mensaje de error por no estar conectado al sistema  -->
-
                     <!-- Fin contenido -->
                 </div>
                 <!-- Fin fila para ingresar columnas de bootstrap -->

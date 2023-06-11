@@ -17,4 +17,4 @@ class PrincipalViewModel(ViewModelBase):
         if self.esta_conectado:
             self.dashboard = await principal_service.get_dashboard(self.id_usuario_conectado)
         else:
-            self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value

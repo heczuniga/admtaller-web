@@ -7,7 +7,7 @@
         $('#msg-error-local').hide();
 
         $('#formulario').submit(function(e) {
-            var isUsuario = $('#id-usuario').val();
+            var idUsuario = $('#id-usuario').val();
             var password = $('#password').val();
             var confirmacionPassword = $('#confirmacion-password').val();
 
@@ -57,7 +57,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="section-title">Parámetro</h4>
+                                <h4 class="section-title">Talleres &#8211; Asignatura</h4>
                             </div>
                         </div>
 
@@ -66,22 +66,23 @@
                             <div class="row align-items-center">
                                 <div class="destacado col-12">
 
-                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data" tal:attributes="action '/param/' + str(param.cod_param)">
+                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data">
                                         <div class="row pb-3">
-                                            <div class="col-1">
+                                            <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="cod-param" class="form-label">Código</label>
-                                                    <input name="cod-param" maxlength="40" type="number" class="form-control" id="cod-param" aria-describedby="emailHelp" value="${param.cod_param}" maxlength="40" readonly>
+                                                    <label for="sigla" class="form-label">Sigla</label>
+                                                    <input tal:condition="asignatura.sigla == 'None'" name="sigla" maxlength="40" type="text" class="form-control" id="sigla" aria-describedby="emailHelp" value="" maxlength="15" required>
+                                                    <input tal:condition="asignatura.sigla != 'None'" name="sigla" maxlength="40" type="text" class="form-control" id="sigla" aria-describedby="emailHelp" value="${asignatura.sigla}" maxlength="15" required readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-11"></div>
+                                            <div class="col-10"></div>
                                         </div>
 
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="nom-param" class="form-label">Nombre parámetro</label>
-                                                    <input name="nom-param" maxlength="40" type="text" class="form-control" id="nom-param" aria-describedby="emailHelp" value="${param.nom_param}" maxlength="50" readonly>
+                                                    <label for="nom-asignatura" class="form-label">Nombre</label>
+                                                    <input name="nom-asignatura" maxlength="40" type="text" class="form-control" id="nom-asignatura" aria-describedby="emailHelp" value="${asignatura.nom_asignatura}" required maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
@@ -90,15 +91,27 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="valor" class="form-label">Valor</label>
-                                                    <input name="valor" maxlength="40" type="text" class="form-control" id="valor" aria-describedby="emailHelp" value="${param.valor}" required maxlength="4">
+                                                    <label for="nom-asignatura-abrev" class="form-label">Nombre abreviado</label>
+                                                    <input name="nom-asignatura-abrev" maxlength="40" type="text" class="form-control" id="nom-asignatura-abrev" aria-describedby="emailHelp" value="${asignatura.nom_asignatura_abrev}" required maxlength="30">
+                                                </div>
+                                            </div>
+                                            <div class="col-8"></div>
+                                        </div>
+
+                                        <div class="row pb-3">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="carrera" class="form-label">Carrera</label>
+                                                    <select name="cod-carrera" class="form-select" aria-label="Default select example">
+                                                        <option tal:repeat="c lista_carrera" tal:attributes="value c.cod_carrera; selected python:str(c.cod_carrera) == str(asignatura.cod_carrera) and 'selected' or None">${c.nom_carrera}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
                                         </div>
                                           
                                         <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
-                                        <a class="btn btn-secondary" href="/param/lista" role="button">Volver</a>
+                                        <a class="btn btn-secondary" href="/asignatura/lista" role="button">Volver</a>
 
                                     </form>
                                     <div id="msg-error-local" class="alert alert-danger" role="alert">

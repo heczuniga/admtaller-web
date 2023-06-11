@@ -10,10 +10,6 @@ from infrastructure.hash import hash_text
 import re
 
 
-def validate_form() -> bool:
-    return True
-
-
 class UsuarioViewModel(ViewModelBase):
     def __init__(self, request: Request):
         super().__init__(request)
@@ -56,7 +52,7 @@ class UsuarioViewModel(ViewModelBase):
             self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
             self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
         else:
-            self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value
 
     # Función que carga datos y verifica si está conectado al sistema
     async def update(self):
@@ -146,4 +142,4 @@ class UsuarioViewModel(ViewModelBase):
             self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
             self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
         else:
-            self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value

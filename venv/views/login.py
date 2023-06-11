@@ -55,6 +55,12 @@ def logout(request: Request):
 @template(template_file="login/password.pt")
 async def password_get(request: Request):
     vm = PasswordViewModel(request)
+    await vm.load()
+
+    # Si hay errores, recarga el mismo formulario con los datos ingresados
+    if vm.msg_error:
+        return vm.to_dict()
+
     return vm.to_dict()
 
 

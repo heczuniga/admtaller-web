@@ -7,10 +7,6 @@ from infrastructure.constants import Mensajes
 from infrastructure.num_conversion import convierte_entero
 
 
-def validate_form() -> bool:
-    return True
-
-
 class ParamViewModel(ViewModelBase):
     def __init__(self, request: Request):
         super().__init__(request)
@@ -59,4 +55,4 @@ class ParamViewModel(ViewModelBase):
         if self.esta_conectado:
             self.param = await param_service.get_param(self.request, cod_param)
         else:
-            self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value

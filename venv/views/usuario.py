@@ -36,7 +36,6 @@ async def eliminar_usuario(request: Request, id_usuario: int):
     return response
 
 
-
 @router.get("/usuario")
 @template(template_file="usuario/usuario.pt")
 async def usuario_new(request: Request):

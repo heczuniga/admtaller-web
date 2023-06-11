@@ -17,4 +17,4 @@ class UsuariosViewModel(ViewModelBase):
         if self.esta_conectado:
             self.usuarios = await usuario_service.get_usuarios_lista(self.id_usuario_conectado)
         else:
-            self.msg_error = f"{Mensajes.ERR_NO_AUTENTICADO}"
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value

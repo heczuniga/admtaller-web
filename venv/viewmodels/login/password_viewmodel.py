@@ -2,6 +2,7 @@
 from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import usuario_service
+from infrastructure.constants import Mensajes
 
 
 class PasswordViewModel(ViewModelBase):
@@ -34,3 +35,8 @@ class PasswordViewModel(ViewModelBase):
             self.msg_error = "Error al cambiar la contraseña"
         else:
             self.msg_exito = "Se ha modificado correctamente la contraseña"
+
+    # Función que carga datos y verifica si está conectado al sistema
+    async def load(self):
+        if not self.esta_conectado:
+            self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value
