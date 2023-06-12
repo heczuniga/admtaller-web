@@ -113,3 +113,122 @@ async def insert_asignatura(asignatura: dict) -> Optional[dict]:
     # Si todo está correcto, Retornamos la respuesta de la API
     asignatura = response.json()
     return asignatura
+
+
+async def get_talleres_lista(sigla: str) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/asignatura/{sigla}/taller/lista"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    talleres = response.json()
+    return talleres
+
+
+async def get_nom_asignatura(sigla: str, id_usuario: int) -> Optional[str]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/asignatura/{sigla}/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    nom_asignatura = response.json()["nom_asignatura"]
+    return nom_asignatura
+
+
+async def delete_taller(request: Request, sigla: str, id_taller: int) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/taller/eliminar/{id_taller}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.delete(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            error_message = e.response.json().get("detail")
+            if "409" not in str(e):
+                raise Exception(f"Error en la llamada a la API respectiva. [{error_message}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    eliminacion = response.json()
+    return eliminacion
+
+
+async def get_taller(id_taller: int, id_usuario: int) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/taller/{id_taller}/{id_usuario}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    asignaturas = response.json()
+    return asignaturas
+
+
+async def update_taller(request: Request, taller: dict) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/taller"
+
+    print(taller)
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.put(url, json=taller, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    taller = response.json()
+    return taller
+
+
+async def insert_taller(taller: dict) -> Optional[dict]:
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/taller"
+    print(taller)
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.post(url, json=taller, follow_redirects=True)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            error_message = str(e)
+            if e.response.status_code == status.HTTP_409_CONFLICT:
+                return {
+                    "msg_error": e.response.json()["detail"],
+                    }
+
+            raise Exception(f"Error en la llamada a la API respectiva. [{error_message}]")
+        except httpx.RequestError as e:
+            error_message = str(e)
+            raise Exception(f"Error de conexión con la API respectiva. [{error_message}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    taller = response.json()
+    return taller

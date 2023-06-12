@@ -9,14 +9,14 @@
         /* Construcción del modal de la confirmación de eliminación */
         $(".btn-secondary").click(function() {
             var sigla = $(this).attr("id");
-            $("#confirmar-eliminacion").attr("id", sigla);
+            $("#confirmar-eliminacion").attr("data-value", sigla);
             var nom_asignatura = $("#nom-asignatura-" + sigla).text();
             $("#mensaje-modal").text("¿Está seguro que desea eliminar la asignatura \"" + sigla + " - " + nom_asignatura + "\"?");
         });
 
         /* Manejo de la confirmación de la eliminación */
         $("#confirmar-eliminacion").click(function() {
-            var sigla = $(this).attr("id");
+            var sigla = $(this).attr("data-value");
             $(location).prop("href", "/asignatura/eliminar/" + sigla);
         });
     });
@@ -66,13 +66,13 @@
                                     <td id="nom-asignatura-abrev-${a.sigla}">${a.nom_asignatura_abrev}</td>
                                     <td id="nom_carrera-${a.sigla}">${a.nom_carrera}</td>
                                     <td>
-                                        <a href="/asignatura/${a.sigla}"><button type="button" class="btn btn-warning">Modificar</button></a>
+                                        <a href="/asignatura/${a.sigla}"><button type="button" id="update-${a.sigla}" class="btn btn-warning">Modificar</button></a>
                                     </td>
                                     <td>
                                         <button id="${a.sigla}" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEliminacion">Eliminar</button>
                                     </td>
                                     <td>
-                                        <button id="${a.sigla}" type="button" class="btn btn-dark">Configurar</button>
+                                        <a href="/asignatura/${a.sigla}/taller/lista"><button id="configure-${a.sigla}" type="button" class="btn btn-dark">Configurar</button></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div id="mensaje-modal" class="modal-body"></div>
                                 <div class="modal-footer">
-                                <button id="confirmar-eliminacion" type="button" class="btn btn-warning" data-bs-dismiss="modal">Eliminar</button>
+                                <button id="confirmar-eliminacion" id="sigla" type="button" class="btn btn-warning" data-bs-dismiss="modal">Eliminar</button>
                                 <button id="cancelar-eliminacion" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div id="mensaje-modal" class="modal-body">${msg_error}</div>
                                 <div class="modal-footer">
-                                <button id="confirmar-eliminacion" type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                                <button id="confirmar-cierre" type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                             </div>

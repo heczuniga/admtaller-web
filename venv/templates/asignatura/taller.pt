@@ -57,7 +57,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="section-title">Talleres &#8211; Asignatura</h4>
+                                <h4 class="section-title">Talleres &#8211; Asignatura &#8211; Taller</h4>
                             </div>
                         </div>
 
@@ -67,55 +67,62 @@
                                 <div class="destacado col-12">
 
                                     <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data">
-                                        <div class="row pb-3">
+                                        <div class="row pb-3 d-none">
+                                            <div class="col-1">
+                                                <div class="form-group d-none">
+                                                    <label for="id-taller" class="form-label d-none">Id</label>
+                                                    <input name="id-taller" maxlength="10" type="text" class="form-control d-none" id="id-taller" aria-describedby="emailHelp" value="${taller.id_taller}">
+                                                </div>
+                                            </div>
+                                            <div class="col-11"></div>
+                                        </div>
+
+                                        <div class="row pb-3 d-none">
                                             <div class="col-2">
-                                                <div class="form-group">
-                                                    <label for="sigla" class="form-label">Sigla</label>
-                                                    <input tal:condition="asignatura.sigla == 'None'" name="sigla" maxlength="40" type="text" class="form-control" id="sigla" aria-describedby="emailHelp" value="" maxlength="15" required>
-                                                    <input tal:condition="asignatura.sigla != 'None'" name="sigla" maxlength="40" type="text" class="form-control" id="sigla" aria-describedby="emailHelp" value="${asignatura.sigla}" maxlength="15" required readonly>
+                                                <div class="form-group d-none">
+                                                    <label for="sigla" class="form-label d-none">Sigla</label>
+                                                    <input name="sigla" maxlength="15" type="text" class="form-control d-none" id="sigla" aria-describedby="emailHelp" value="${taller.sigla}">
                                                 </div>
                                             </div>
                                             <div class="col-10"></div>
                                         </div>
 
                                         <div class="row pb-3">
-                                            <div class="col-4">
+                                            <div class="col-1">
                                                 <div class="form-group">
-                                                    <label for="nom-asignatura" class="form-label">Nombre</label>
-                                                    <input name="nom-asignatura" maxlength="40" type="text" class="form-control" id="nom-asignatura" aria-describedby="emailHelp" value="${asignatura.nom_asignatura}" required maxlength="50">
+                                                    <label for="semana" class="form-label">Semana</label>
+                                                    <input name="semana" maxlength="2" type="number" class="form-control" id="semana" aria-describedby="emailHelp" value="${taller.semana}" required min="1">
                                                 </div>
                                             </div>
-                                            <div class="col-8"></div>
+                                            <div class="col-11"></div>
+                                        </div>
+
+                                        <div class="row pb-3">
+                                            <div class="col-5">
+                                                <div class="form-group">
+                                                    <label for="titulo-preparacion" class="form-label">Título preparación</label>
+                                                    <input name="titulo-preparacion" maxlength="100" type="text" class="form-control" id="titulo-preparacion" aria-describedby="emailHelp" value="${taller.titulo_preparacion}" required maxlength="100">
+                                                </div>
+                                            </div>
+                                            <div class="col-7"></div>
                                         </div>
 
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="nom-asignatura-abrev" class="form-label">Nombre abreviado</label>
-                                                    <input name="nom-asignatura-abrev" maxlength="40" type="text" class="form-control" id="nom-asignatura-abrev" aria-describedby="emailHelp" value="${asignatura.nom_asignatura_abrev}" required maxlength="30">
+                                                    <label for="detalle-preparacion" class="form-label">Detalle preparación</label>
+                                                    <textarea name="detalle-preparacion" id="detalle-preparacion" rows="10" cols="100">${taller.detalle_preparacion}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
                                         </div>
 
-                                        <div class="row pb-3">
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <label for="carrera" class="form-label">Carrera</label>
-                                                    <select name="cod-carrera" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="c lista_carrera" tal:attributes="value c.cod_carrera; selected python:str(c.cod_carrera) == str(asignatura.cod_carrera) and 'selected' or None">${c.nom_carrera}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-8"></div>
-                                        </div>
-                                          
                                         <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
-                                        <a class="btn btn-secondary" href="/asignatura/lista" role="button">Volver</a>
-                                        <a class="btn btn-dark" href="/asignatura/${asignatura.sigla}/taller/lista" role="button">Configurar</a>
+                                        <a class="btn btn-secondary" href="/asignatura/${taller.sigla}/taller/lista" role="button">Volver</a>
+                                        <a class="btn btn-dark" href="/asignatura/${taller.sigla}/taller/${taller.id_taller}/producto/lista" role="button">Configurar</a>
 
                                     </form>
-                                    <div id="msg-error-local" class="alert alert-danger" role="alert">
+                                    <div id="msg-error-local" class="alert alert-danger" role="alert">aller
                              
                                     </div>
                                     <div id="anchor-error"></div>

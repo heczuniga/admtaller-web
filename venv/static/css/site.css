@@ -76,3 +76,9 @@ footer a:hover {
     color: #0073b7;
     background-color: white;
 }
+
+.section-subtitle {
+    font-weight: bold;
+    color: grey;
+    background-color: white;
+}
