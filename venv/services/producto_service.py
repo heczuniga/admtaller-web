@@ -1,4 +1,5 @@
 
+
 from typing import Optional
 import httpx
 from httpx import Request
@@ -8,9 +9,9 @@ from infrastructure import cookie_autoriz
 from fastapi import status
 
 
-async def get_asignaturas_lista(id_usuario: int) -> Optional[dict]:
+async def get_lista_productos(id_usuario: int) -> Optional[dict]:
     # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE.value}/asignatura/lista/{id_usuario}"
+    url = f"{APITaller.URL_BASE.value}/producto/lista/{id_usuario}"
 
     async with httpx.AsyncClient() as client:
         try:
@@ -22,8 +23,8 @@ async def get_asignaturas_lista(id_usuario: int) -> Optional[dict]:
             raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
 
     # Si todo está correcto, Retornamos la respuesta de la API
-    asignaturas = response.json()
-    return asignaturas
+    productos = response.json()
+    return productos
 
 
 async def delete_asignatura(request: Request, sigla: str) -> Optional[dict]:
@@ -250,23 +251,3 @@ async def get_productos_lista(sigla: str, id_taller: int) -> Optional[dict]:
     productos = response.json()
     return productos
 
-
-async def delete_producto_taller(request: Request, sigla: str, id_taller: int, id_producto: int, cod_agrupador: int) -> Optional[dict]:
-
-    # Armamos la URL de la API respectiva
-    url = f"{APITaller.URL_BASE.value}/taller/eliminar/{id_taller}/producto/{id_producto}/agrupador/{cod_agrupador}"
-
-    async with httpx.AsyncClient() as client:
-        try:
-            response: Response = await client.delete(url)
-            response.raise_for_status()
-        except httpx.HTTPStatusError as e:
-            error_message = e.response.json().get("detail")
-            if "409" not in str(e):
-                raise Exception(f"Error en la llamada a la API respectiva. [{error_message}]")
-        except httpx.RequestError as e:
-            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
-
-    # Si todo está correcto, Retornamos la respuesta de la API
-    eliminacion = response.json()
-    return eliminacion

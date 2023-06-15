@@ -1,9 +1,7 @@
 
-from typing import List
 from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import asignatura_service
-from services import carrera_service
 from infrastructure.constants import Mensajes
 
 
@@ -15,7 +13,7 @@ class TallerViewModel(ViewModelBase):
         self.id_taller: int
         self.titulo_preparacion: str
         self.detalle_preparacion: str
-        self.sigla: int
+        self.sigla: str
         self.nom_asignatura: str
 
     async def validate(self) -> bool:
@@ -28,6 +26,7 @@ class TallerViewModel(ViewModelBase):
         K_NUEVOREGISTRO: int = 0
         if self.esta_conectado:
             self.sigla = sigla
+            self.nom_asignatura = await asignatura_service.get_nom_asignatura(self.sigla, self.id_usuario_conectado)
             self.taller = await asignatura_service.get_taller(K_NUEVOREGISTRO, self.id_usuario_conectado)
             self.taller["sigla"] = sigla
         else:
@@ -51,7 +50,6 @@ class TallerViewModel(ViewModelBase):
             "sigla": self.sigla,
         }
 
-        print(self.taller)
         if await self.validate():
             self.taller = await asignatura_service.update_taller(self.request, self.taller)
 
@@ -78,8 +76,6 @@ class TallerViewModel(ViewModelBase):
             "sigla": self.sigla,
         }
 
-        print(self.taller)
-
         if await self.validate():
             taller = await asignatura_service.insert_taller(self.taller)
             if "msg_error" in taller:
@@ -93,8 +89,10 @@ class TallerViewModel(ViewModelBase):
                 self.id_taller = self.taller["id_taller"]
                 self.msg_exito = "Se ha agregado correctamente el taller"
 
-    async def load(self, id_taller):
+    async def load(self, sigla, id_taller):
         if self.esta_conectado:
+            self.sigla = sigla
             self.taller = await asignatura_service.get_taller(id_taller, self.id_usuario_conectado)
+            self.nom_asignatura = await asignatura_service.get_nom_asignatura(self.sigla, self.id_usuario_conectado)
         else:
             self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value
