@@ -9,6 +9,7 @@ from views import principal
 from views import usuario
 from views import param
 from views import asignatura
+from views import programacion
 
 app = fastapi.FastAPI()
 
@@ -24,6 +25,7 @@ def configura_routers():
     app.include_router(usuario.router)
     app.include_router(param.router)
     app.include_router(asignatura.router)
+    app.include_router(programacion.router)
 
 
 # Método de configuración de templates

@@ -66,26 +66,26 @@
                         <table class="table table-striped-custom">
                             <thead class="tabla-encabezado">
                                 <tr>
+                                    <th scope="col">Agrupador</th>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Producto</th>
                                     <th scope="col">Unidad</th>
                                     <th class="text-end" scope="col">Precio unitario</th>
                                     <th class="text-end" scope="col">Cantidad</th>
                                     <th class="text-end" scope="col">Total</th>
-                                    <th scope="col">Agrupador</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr tal:repeat="p productos"  tal:omit-tag="False">
+                                    <td id="nom-agrupador-${p.id_producto}">${p.nom_agrupador}</td>
                                     <td id="nom-categ-producto-${p.id_producto}">${p.nom_categ_producto}</td>
                                     <td id="nom-producto-${p.id_producto}">${p.nom_producto}</td>
                                     <td id="nom-unidad-medida-${p.id_producto}">${p.nom_unidad_medida}</td>
                                     <td class="text-end" id="precio-${p.id_producto}">${'${:,}'.format(p.precio)}</td>
                                     <td class="text-end" id="cantidad-${p.id_producto}">${'{:,.2f}'.format(p.cantidad)}</td>
                                     <td class="text-end" id="total-${p.id_producto}">${'${:,}'.format(p.total)}</td>
-                                    <td id="nom-agrupador-${p.id_producto}">${p.nom_agrupador}</td>
                                     <td>
                                         <a href="/asignatura/${sigla}/taller/${id_taller}/producto/${p.id_producto}/agrupador/${p.cod_agrupador}"><button type="button" class="btn btn-warning">Modificar</button></a>
                                     </td>
