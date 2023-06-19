@@ -3,7 +3,7 @@ from typing import Optional
 from starlette.requests import Request
 from starlette.responses import Response
 
-from infrastructure.num_conversion import convierte_entero
+from infrastructure.conversion import convierte_entero
 from infrastructure.hash import hash_text
 
 # Nombre de la cookie a ser usada

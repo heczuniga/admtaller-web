@@ -7,13 +7,11 @@
         $('#msg-error-local').hide();
 
         $('#formulario').submit(function(e) {
-            var idUsuario = $('#id-usuario').val();
-            var password = $('#password').val();
-            var confirmacionPassword = $('#confirmacion-password').val();
+            var sigla = $('#sigla').val();
 
-            if ((idUsuario === 0) && (password.trim().length === 0) && (confirmacionPassword.trim().length !== 0)) {
+            if (sigla.trim() === "") {
                 // Mostrar mensaje de error en la zona de errores
-                var mensajeError = "<b>Error</b>: Debe ingresar la contraseña al usuario"
+                var mensajeError = "<b>Error</b>: Debe seleccionar la asignatura a programar"
 
                 $('#msg-error-local').show();
                 $('#msg-error-local').html(mensajeError);
@@ -21,15 +19,6 @@
                 e.preventDefault(); // Evitar el envío del formulario
             }
 
-            if ((password !== confirmacionPassword) && ((password.trim().length !== 0) || (confirmacionPassword.trim().length !== 0))) {
-                // Mostrar mensaje de error en la zona de errores
-                var mensajeError = "<b>Error</b>: La confirmación de la contraseña no coincide"
-
-                $('#msg-error-local').show();
-                $('#msg-error-local').html(mensajeError);
-
-                e.preventDefault(); // Evitar el envío del formulario
-            }
         });
 
       /* Leemos el mensaje para determinar si viene desde la grabación del formulario y mostrar el mensaje de grabación o no */
@@ -57,11 +46,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="section-title">Talleres &#8211; Producto</h4>
-                                <h5 class="section-subtitle">${sigla} - ${nom_asignatura}</h5>
-                                <h6 class="section-subtitle">Semana ${semana} - ${titulo_preparacion}</h6>
-                                <p id="sigla" class="d-none">${sigla}</p>
-                                <p id="id_taller" class="d-none">${id_taller}</p>
+                                <h4 class="section-title">Programación &#8211; Período  &#8211; Asignatura  &#8211; Sección</h4>
                             </div>
                         </div>
 
@@ -72,18 +57,14 @@
 
                                     <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data">
 
-                                        <input name="id-taller" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_taller}" required maxlength="40">
-                                        <input name="sigla" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${sigla}" required maxlength="40">
-
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="producto" class="form-label">Producto</label>
-                                                    <select tal:condition="id_producto==0 and cod_agrupador==0" name="id-producto" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="p lista_productos" tal:attributes="value p.id_producto; selected python:str(p.id_producto) == str(id_producto) and 'selected' or None">${p.nom_producto}</option>
+                                                    <label for="producto" class="form-label">Período</label>
+                                                    <select tal:condition="method=='GET' or msg_error" name="cod-periodo-academ" class="form-select" aria-label="Default select example">
+                                                        <option tal:repeat="p lista_periodos" tal:attributes="value p.cod_periodo_academ; selected python:str(p.cod_periodo_academ) == str(cod_periodo_academ) and 'selected' or None">${p.nom_periodo_academ}</option>
                                                     </select>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="nom-producto" maxlength="40" type="text" class="form-control" id="cod-" aria-describedby="emailHelp" value="${nom_producto}" required maxlength="40" readonly disabled>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="id-producto" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_producto}" required maxlength="40">
+                                                    <input tal:condition="method!='GET' and not msg_error" name="cod-periodo-academ" type="text" class="form-control" id="cod-periodo-academ" aria-describedby="emailHelp" value="${nom_periodo_academ}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
@@ -92,12 +73,12 @@
                                         <div class="row pb-3">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="agrupador" class="form-label">Agrupador</label>
-                                                    <select tal:condition="id_producto==0 and cod_agrupador==0" name="cod-agrupador" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="a lista_agrupadores" tal:attributes="value a.cod_agrupador; selected python:str(a.cod_agrupador) == str(cod_agrupador) and 'selected' or None">${a.nom_agrupador}</option>
+                                                    <label for="sigla" class="form-label">Asignatura</label>
+                                                    <select id="sigla" tal:condition="method=='GET' or msg_error" name="sigla" class="form-select" aria-label="Default select example">
+                                                        <option value="">(Seleccione asignatura)</option>
+                                                        <option tal:repeat="a lista_asignaturas" tal:attributes="value a.sigla; selected python:str(a.sigla) == str(sigla) and 'selected' or None">${a.sigla} - ${a.nom_asignatura}</option>
                                                     </select>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="nom-agrupador" maxlength="40" type="text" class="form-control" id="cod-agrupador" aria-describedby="emailHelp" value="${nom_agrupador}" required maxlength="40" readonly disabled>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="cod-agrupador" maxlength="40" type="hidden" class="form-control" id="cod-agrupador" aria-describedby="emailHelp" value="${cod_agrupador}" required maxlength="40">
+                                                    <input tal:condition="method!='GET' and not msg_error" name="sigla" type="text" class="form-control" id="sigla" aria-describedby="emailHelp" value="${nom_asignatura}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-8"></div>
@@ -106,19 +87,20 @@
                                         <div class="row pb-3">
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="cantidad" class="form-label">Cantidad</label>
-                                                    <input name="cantidad" step="0.01" maxlength="2" type="number" class="form-control" id="semana" aria-describedby="emailHelp" value="${cantidad}" required min="1">
+                                                    <label for="seccion" class="form-label">Sección</label>
+                                                    <input tal:condition="method=='GET' or msg_error" name="seccion" step="1" maxlength="2" type="number" class="form-control" id="seccion" aria-describedby="emailHelp" value="${seccion}" required min="1" max="100">
+                                                    <input tal:condition="method!='GET' and not msg_error" name="seccion" step="1" maxlength="2" type="number" class="form-control" id="seccion" aria-describedby="emailHelp" value="${seccion}" required min="1" max="100" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-10"></div>
                                         </div>
                                           
-                                        <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
-                                        <a class="btn btn-secondary" href="/asignatura/${sigla}/taller/${id_taller}/producto/lista" role="button">Volver</a>
+                                        <button tal:condition="method=='GET' or msg_error" type="submit" class="btn btn-warning" id="enviar">Guardar</button>
+                                        <a tal:condition="method!='GET' and not msg_error" href="/programacion/asignatura/periodo/seccion" class="btn btn-dark">Agregar nuevo</a>
+                                        <a id="nuevo" class="btn btn-secondary" href="/programacion/asignatura/lista" role="button">Volver</a>
 
                                     </form>
                                     <div id="msg-error-local" class="alert alert-danger" role="alert">
-                             
                                     </div>
                                     <div id="anchor-error"></div>
                                     <div id="msg-error" tal:condition="msg_error" class="alert alert-danger" role="alert">

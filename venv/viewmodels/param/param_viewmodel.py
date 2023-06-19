@@ -4,7 +4,7 @@ from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import param_service
 from infrastructure.constants import Mensajes
-from infrastructure.num_conversion import convierte_entero
+from infrastructure.conversion import convierte_entero
 
 
 class ParamViewModel(ViewModelBase):

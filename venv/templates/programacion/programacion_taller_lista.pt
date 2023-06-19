@@ -14,10 +14,13 @@
             let cod_periodo_academ = textos[1];
             let sigla = textos[2];
             let seccion = textos[3];
+            let id_taller = textos[4];
+            let fecha = textos[5];
             $("#confirmar-eliminacion").attr("data-value", texto);
-            let nom_periodo_academ = $("#nom-periodo-academ-" + ano_academ + cod_periodo_academ + sigla + seccion).text();
-            let nom_asignatura = $("#nom-asignatura-" + ano_academ + cod_periodo_academ + sigla + seccion).text();
-            $("#mensaje-modal").text("¿Está seguro que desea eliminar la programación de la sección " + seccion + " para la asignatura \"" + sigla + " - " + nom_asignatura + "\" para el " + nom_periodo_academ.toLowerCase() + "?");
+            let fecha_formato_largo = $("#fecha-formato-largo-" + ano_academ + cod_periodo_academ + sigla + seccion + id_taller + fecha).text();
+            let semana = $("#semana-" + ano_academ + cod_periodo_academ + sigla + seccion + id_taller + fecha).text();
+            let titulo_preparacion = $("#titulo-preparacion-" + ano_academ + cod_periodo_academ + sigla + seccion + id_taller + fecha).text();
+            $("#mensaje-modal").text("¿Está seguro que desea eliminar la programación del taller de la semana " + semana + " \"" + titulo_preparacion + "\" para el día " + fecha_formato_largo + "?");
         });
 
         /* Manejo de la confirmación de la eliminación */
@@ -28,7 +31,9 @@
             let cod_periodo_academ = textos[1];
             let sigla = textos[2];
             let seccion = textos[3];
-            $(location).prop("href", "/programacion/eliminar/ano_academ/" + ano_academ + "/periodo/" + cod_periodo_academ + "/sigla/" + sigla + "/seccion/" + seccion);
+            let id_taller = textos[4];
+            let fecha = textos[5];
+            $(location).prop("href", "/programacion/eliminar/ano_academ/" + ano_academ + "/periodo/" + cod_periodo_academ + "/sigla/" + sigla + "/seccion/" + seccion + "/taller/" + id_taller + "/fecha/" + fecha);
         });
     });
 </script>
@@ -49,12 +54,14 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="section-title">Programación</h4>
+                                <h5 class="section-subtitle">${nom_periodo_academ}</h5>
+                                <h6 class="section-subtitle">${sigla} - ${nom_asignatura} - Sección ${seccion}</h6>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-2">
-                                <a href="/programacion/asignatura/periodo/seccion" type="button" class="btn btn-warning mb-3">Agregar</a>
+                                <a href="/programacion/asignatura/${sigla}/periodo/${cod_periodo_academ}/seccion/${seccion}" type="button" class="btn btn-warning mb-3">Agregar</a>
                             </div>
                         </div>
 
@@ -62,28 +69,27 @@
                             <thead class="tabla-encabezado">
                                 <tr>
                                     <th class="d-none" scope="col">Año académico</th>
-                                    <th scope="col">Período académico</th>
-                                    <th class="text-center" scope="col">Sigla</th>
-                                    <th scope="col">Asignatura</th>
-                                    <th class="text-center" scope="col">Sección</th>
-                                    <th scope="col">Carrera</th>
+                                    <th class="text-center" scope="col">Fecha</th>
+                                    <th class="text-center" scope="col">Semana</th>
+                                    <th scope="col">Preparación</th>
+                                    <th class="text-center" scope="col">Docente asignado</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr tal:repeat="pa programaciones_asignatura"  tal:omit-tag="False">
-                                    <td class="text-center d-none" id="ano-academ-${pa.ano_academ}">${pa.ano_academ}</td>
-                                    <td id="nom-periodo-academ-${pa.ano_academ}${pa.cod_periodo_academ}${pa.sigla}${pa.seccion}">${pa.nom_periodo_academ}</td>
-                                    <td class="text-center" id="sigla-${pa.ano_academ}${pa.cod_periodo_academ}${pa.sigla}|${pa.seccion}">${pa.sigla}</td>
-                                    <td id="nom-asignatura-${pa.ano_academ}${pa.cod_periodo_academ}${pa.sigla}${pa.seccion}">${pa.nom_asignatura}</td>
-                                    <td class="text-center" id="seccion-${pa.ano_academ}${pa.cod_periodo_academ}${pa.sigla}${pa.seccion}">${pa.seccion}</td>
-                                    <td id="nom-carrera-${pa.ano_academ}${pa.cod_periodo_academ}${pa.sigla}${pa.seccion}">${pa.nom_carrera}</td>
+                                <tr tal:repeat="pt programaciones_taller"  tal:omit-tag="False">
+                                    <td class="text-center d-none" id="ano-academ-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.ano_academ}</td>
+                                    <td class="text-center d-none" id="fecha-formato-largo-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.fecha_formato_largo}</td>
+                                    <td class="text-center" id="fecha-formato-corto-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.fecha_formato_corto}</td>
+                                    <td class="text-center" id="semana-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.semana}</td>
+                                    <td id="titulo-preparacion-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.titulo_preparacion}</td>
+                                    <td class="text-center" id="id_usuario-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.nom_preferido} ${pt.primer_apellido} ${pt.segundo_apellido}</td>
                                     <td>
-                                        <button id="${pa.ano_academ}|${pa.cod_periodo_academ}|${pa.sigla}|${pa.seccion}" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEliminacion">Eliminar</button>
+                                        <a href="/programacion/asignatura/${pt.sigla}/periodo/${pt.cod_periodo_academ}/seccion/${pt.seccion}/taller/${pt.id_taller}/fecha/${pt.fecha}"><button type="button" class="btn btn-warning">Modificar</button></a>
                                     </td>
                                     <td>
-                                        <a href="/programacion/asignatura/${pa.sigla}/periodo/${pa.cod_periodo_academ}/seccion/${pa.seccion}/lista"><button id="configure-${pa.ano_academ}" type="button" class="btn btn-dark">Configurar</button></a>
+                                        <button id="${pt.ano_academ}|${pt.cod_periodo_academ}|${pt.sigla}|${pt.seccion}|${pt.id_taller}|${pt.fecha}" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEliminacion">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>

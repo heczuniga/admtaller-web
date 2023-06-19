@@ -63,3 +63,41 @@ async def update_param(request: Request, param: dict) -> Optional[dict]:
     # Si todo está correcto, Retornamos la respuesta de la API
     param = response.json()
     return param
+
+
+async def get_periodo_lista(request: Request) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/param/periodo/lista"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    periodos = response.json()
+    return periodos
+
+
+async def get_periodo(request: Request, cod_periodo_academ: int) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/param/periodo/{cod_periodo_academ}"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    periodo = response.json()
+    return periodo
