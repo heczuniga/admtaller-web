@@ -101,3 +101,41 @@ async def get_periodo(request: Request, cod_periodo_academ: int) -> Optional[dic
     # Si todo está correcto, Retornamos la respuesta de la API
     periodo = response.json()
     return periodo
+
+
+async def get_unidad_medida_lista(request: Request) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/unidad_medida/lista"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    unidades_medida = response.json()
+    return unidades_medida
+
+
+async def get_categoria_producto_lista(request: Request) -> Optional[dict]:
+
+    # Armamos la URL de la API respectiva
+    url = f"{APITaller.URL_BASE.value}/categoria_producto/lista"
+
+    async with httpx.AsyncClient() as client:
+        try:
+            response: Response = await client.get(url)
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Error en la llamada a la API respectiva. [{str(e)}]")
+        except httpx.RequestError as e:
+            raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
+
+    # Si todo está correcto, Retornamos la respuesta de la API
+    categorias_producto = response.json()
+    return categorias_producto

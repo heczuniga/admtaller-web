@@ -78,7 +78,7 @@
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/asignatura/lista">Talleres</a></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/programacion/asignatura/lista">Programación</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Productos</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/producto/lista">Productos</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="#">Registro</a></li>
                                     </ul>
@@ -120,7 +120,7 @@
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/asignatura/lista">Talleres</a></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/programacion/asignatura/lista">Programación</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Productos</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/producto/lista">Productos</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">

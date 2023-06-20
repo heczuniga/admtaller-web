@@ -133,15 +133,11 @@ async def programacion_taller_post(request: Request, sigla: str, cod_periodo_aca
     vm = ProgramacionTallerViewModel(request)
     await vm.insert(sigla, cod_periodo_academ, seccion)
 
-    print("Llega!")
     # Si hay errores, recarga el mismo formulario con los datos ingresados
     if vm.msg_error:
         return vm.to_dict()
-    print("No llega!")
 
     # Se carga el formulario con los datos
-    print(vm.id_taller)
-    print(vm.fecha)
     await vm.load(sigla=sigla, cod_periodo_academ=cod_periodo_academ, seccion=seccion, id_taller=vm.id_taller, fecha=vm.fecha)
 
     # Se retorna el diccionario entregado por el redirect hacia la página principal
