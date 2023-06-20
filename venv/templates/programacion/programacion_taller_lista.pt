@@ -72,7 +72,7 @@
                                     <th class="text-center" scope="col">Fecha</th>
                                     <th class="text-center" scope="col">Semana</th>
                                     <th scope="col">Preparación</th>
-                                    <th class="text-center" scope="col">Docente asignado</th>
+                                    <th scope="col">Docente asignado</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -84,7 +84,7 @@
                                     <td class="text-center" id="fecha-formato-corto-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.fecha_formato_corto}</td>
                                     <td class="text-center" id="semana-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.semana}</td>
                                     <td id="titulo-preparacion-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.titulo_preparacion}</td>
-                                    <td class="text-center" id="id_usuario-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.nom_preferido} ${pt.primer_apellido} ${pt.segundo_apellido}</td>
+                                    <td id="id_usuario-${pt.ano_academ}${pt.cod_periodo_academ}${pt.sigla}${pt.seccion}${pt.id_taller}${pt.fecha}">${pt.nom_preferido} ${pt.primer_apellido} ${pt.segundo_apellido}</td>
                                     <td>
                                         <a href="/programacion/asignatura/${pt.sigla}/periodo/${pt.cod_periodo_academ}/seccion/${pt.seccion}/taller/${pt.id_taller}/fecha/${pt.fecha}"><button type="button" class="btn btn-warning">Modificar</button></a>
                                     </td>
