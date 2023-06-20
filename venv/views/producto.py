@@ -13,7 +13,7 @@ router = fastapi.APIRouter()
 
 @router.get("/producto/lista")
 @template(template_file="producto/producto_lista.pt")
-async def usuario_lista(request: Request):
+async def producto_lista(request: Request):
     vm = ProductosViewModel(request)
     await vm.load()
 
@@ -40,8 +40,52 @@ async def eliminar_producto(request: Request, id_producto: int):
 
 @router.get("/producto/{id_producto}")
 @template(template_file="producto/producto.pt")
-async def usuario(request: Request, id_producto: int):
+async def producto(request: Request, id_producto: int):
     vm = ProductoViewModel(request)
     await vm.load(id_producto=id_producto)
 
+    return vm.to_dict()
+
+
+@router.get("/producto")
+@template(template_file="producto/producto.pt")
+async def producto_new(request: Request):
+    vm = ProductoViewModel(request)
+    await vm.load_empty()
+    return vm.to_dict()
+
+
+@router.post("/producto/{id_producto}")
+@template(template_file="producto/producto.pt")
+async def producto_put(request: Request, id_producto: int):
+    # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
+    vm = ProductoViewModel(request)
+    await vm.update()
+
+    # Si hay errores, recarga el mismo formulario con los datos ingresados
+    if vm.msg_error:
+        return vm.to_dict()
+
+    # Se carga el formulario con los datos
+    await vm.load(id_producto=id_producto)
+
+    # Se retorna el diccionario entregado por el redirect hacia la página principal
+    return vm.to_dict()
+
+
+@router.post("/producto")
+@template(template_file="producto/producto.pt")
+async def usuario_post(request: Request):
+    # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
+    vm = ProductoViewModel(request)
+    await vm.insert()
+
+    # Si hay errores, recarga el mismo formulario con los datos ingresados
+    if vm.msg_error:
+        return vm.to_dict()
+
+    # Se carga el formulario con los datos
+    await vm.load(id_producto=vm.id_producto)
+
+    # Se retorna el diccionario entregado por el redirect hacia la página principal
     return vm.to_dict()

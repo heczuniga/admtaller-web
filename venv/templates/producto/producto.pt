@@ -6,6 +6,23 @@
 
         $('#msg-error-local').hide();
 
+        $('#formulario').submit(function(e) {
+            let cod_unidad_medida = $('#cod-unidad-medida').val();
+
+            if (cod_unidad_medida.trim().length === 0) {
+                // Mostrar mensaje de error en la zona de errores
+                var mensajeError = "<b>Error</b>: Debe ingresar la unidad de medida del producto"
+
+                $('#msg-error-local').show();
+                $('#msg-error-local').html(mensajeError);
+
+                $('html,body').animate({ scrollTop: $("#anchor-error").offset().top }, 'fast');
+
+                e.preventDefault(); // Evitar el envío del formulario
+            }
+
+        });
+
       /* Leemos el mensaje para determinar si viene desde la grabación del formulario y mostrar el mensaje de grabación o no */
       method = $("#method").text();
       if (method != "GET") {
@@ -40,15 +57,15 @@
                             <div class="row align-items-center">
                                 <div class="destacado col-12">
 
-                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data">
+                                    <form class="pt-2 pb-4" method="post" id="formulario" enctype="multipart/form-data" tal:attributes="action '/producto' if producto.id_producto == 0 else '/producto/' + str(producto.id_producto)">
 
                                         <input name="id-producto" maxlength="40" type="hidden" class="form-control" id="id-producto" aria-describedby="emailHelp" value="${producto.id_producto}" required maxlength="40">
 
                                         <div class="row pb-3">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="producto" class="form-label">Producto</label>
-                                                    <input name="nom-producto" maxlength="100" type="text" class="form-control" id="nom-producto" aria-describedby="emailHelp" value="${producto.nom_producto}" required maxlength="100">
+                                                    <label for="producto" class="form-label">Nombre</label>
+                                                    <input name="nom-producto" maxlength="100" type="text" class="form-control" id="nom-producto" aria-describedby="emailHelp" value="${producto.nom_producto}" required maxlength="100" autofocus>
                                                 </div>
                                             </div>
                                             <div class="col-6"></div>
@@ -68,7 +85,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="cod-unidad-medida" class="form-label">Unidad de medida</label>
-                                                    <select name="cod-unidad-medida" class="form-select" aria-label="Default select example">
+                                                    <select id="cod-unidad-medida" name="cod-unidad-medida" class="form-select" aria-label="Default select example">
                                                         <option value="">(Seleccione unidad de medida)</option>
                                                         <option tal:repeat="um lista_unidad_medida" tal:attributes="value um.cod_unidad_medida; selected python:str(um.cod_unidad_medida) == str(producto.cod_unidad_medida) and 'selected' or None">${um.nom_unidad_medida}</option>
                                                     </select>

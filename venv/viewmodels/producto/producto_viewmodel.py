@@ -15,6 +15,12 @@ class ProductoViewModel(ViewModelBase):
     def __init__(self, request: Request):
         super().__init__(request)
 
+        self.id_producto: int
+        self.nom_producto: int
+        self.precio: int
+        self.cod_unidad_medida: int
+        self.cod_categ_producto: int
+
         self.producto: dict
         self.lista_unidad_medida: List[dict]
         self.lista_categoria_producto: List[dict]
@@ -22,15 +28,30 @@ class ProductoViewModel(ViewModelBase):
     async def validate(self) -> bool:
         result: bool = True
 
+        # Verificar que se ingrese el nombre del producto
+        if len(self.producto["nom_producto"].strip()) == 0:
+            self.msg_error = "Debe ingresar el nombre del producto"
+            result = False
+
+        # Verificar que se ingrese un precio al producto
+        if self.producto["precio"] <= 0:
+            self.msg_error = "Debe ingresar un precio al producto"
+            result = False
+
+        # Verificar que se ingrese una unidad de medida
+        if self.producto["cod_unidad_medida"] == 0:
+            self.msg_error = "Debe ingresar una unidad de medida al producto"
+            result = False
+
         return result
 
     # Función que permite visualizar un formulario para registros nuevos en el sistema
     async def load_empty(self):
-        K_NUEVOUSUARIO: int = 0
+        K_NUEVO: int = 0
         if self.esta_conectado:
-            self.usuario = await usuario_service.get_usuario(self.request, K_NUEVOUSUARIO)
-            self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
-            self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
+            self.producto = await producto_service.get_producto(self.request, K_NUEVO)
+            self.lista_unidad_medida = await param_service.get_unidad_medida_lista(self.request)
+            self.lista_categoria_producto = await param_service.get_categoria_producto_lista(self.request)
         else:
             self.msg_error = Mensajes.ERR_NO_AUTENTICADO.value
 
@@ -38,83 +59,58 @@ class ProductoViewModel(ViewModelBase):
     async def update(self):
         # Recuperamos los datos desde el formulario
         form = await self.request.form()
-        self.id_usuario = int(form.get("id-usuario", "").strip())
-        self.hash_password = form.get("password", "")
-        self.login = form.get("login", "").lower().strip()
-        self.primer_apellido = form.get("primer-apellido", "").strip()
-        self.segundo_apellido = form.get("segundo-apellido", "").strip()
-        self.nom = form.get("nom", "").strip()
-        self.nom_preferido = form.get("nom-preferido", "").strip()
-        self.cod_perfil = int(form.get("cod-perfil", "").strip())
-        self.cod_carrera = int(form.get("cod-carrera", "").strip())
+        self.id_producto = int(form.get("id-producto", "").strip())
+        self.nom_producto = form.get("nom-producto", "")
+        self.precio = int(form.get("precio", "").lower().strip())
+        self.cod_unidad_medida = form.get("cod-unidad-medida", "").strip()
+        self.cod_categ_producto = form.get("cod-categ-producto", "").strip()
 
-        self.usuario = {
-            "id_usuario": self.id_usuario,
-            "login": self.login,
-            "hash_password": self.hash_password,
-            "primer_apellido": self.primer_apellido,
-            "segundo_apellido": self.segundo_apellido,
-            "nom": self.nom,
-            "nom_preferido": self.nom_preferido,
-            "cod_perfil": self.cod_perfil,
-            "cod_carrera": self.cod_carrera,
-            "nom_perfil": "",
-            "nom_carrera": "",
+        self.producto = {
+            "id_producto": self.id_producto,
+            "nom_producto": self.nom_producto,
+            "precio": self.precio,
+            "cod_unidad_medida": self.cod_unidad_medida,
+            "cod_categ_producto": self.cod_categ_producto,
         }
-        self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
-        self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
+        self.lista_unidad_medida = await param_service.get_unidad_medida_lista(self.request)
+        self.lista_categoria_producto = await param_service.get_categoria_producto_lista(self.request)
 
         if await self.validate():
-            # Encriptamos la password antes de pasarla al servicio
-            self.hash_password = hash_text(self.hash_password)
-            self.usuario["hash_password"] = self.hash_password
+            self.producto = await producto_service.update_producto(self.request, self.producto)
 
-            self.usuario = await usuario_service.update_usuario(self.request, self.usuario)
-
-            if not self.usuario:
-                self.msg_error = "Error al modificar el usuario"
+            if not self.producto:
+                self.msg_error = "Error al modificar el producto"
             else:
-                self.msg_exito = "Se ha modificado correctamente al usuario"
+                self.msg_exito = "Se ha modificado correctamente el producto"
 
     # Función que carga datos y verifica si está conectado al sistema
     async def insert(self):
         # Recuperamos los datos desde el formulario
         form = await self.request.form()
-        self.login = form.get("login", "").lower().strip()
-        self.hash_password = form.get("password", "").lower().strip()
-        self.primer_apellido = form.get("primer-apellido", "").strip()
-        self.segundo_apellido = form.get("segundo-apellido", "").strip()
-        self.nom = form.get("nom", "").strip()
-        self.nom_preferido = form.get("nom-preferido", "").strip()
-        self.cod_perfil = int(form.get("cod-perfil", "").strip())
-        self.cod_carrera = int(form.get("cod-carrera", "").strip())
+        self.id_producto = int(form.get("id-producto", "").strip())
+        self.nom_producto = form.get("nom-producto", "")
+        self.precio = int(form.get("precio", "").lower().strip())
+        self.cod_unidad_medida = form.get("cod-unidad-medida", "").strip()
+        self.cod_categ_producto = form.get("cod-categ-producto", "").strip()
 
-        self.usuario = {
-            "id_usuario": 0,
-            "login": self.login,
-            "hash_password": self.hash_password,
-            "primer_apellido": self.primer_apellido,
-            "segundo_apellido": self.segundo_apellido,
-            "nom": self.nom,
-            "nom_preferido": self.nom_preferido,
-            "cod_perfil": self.cod_perfil,
-            "cod_carrera": self.cod_carrera,
+        self.producto = {
+            "id_producto": 0,
+            "nom_producto": self.nom_producto,
+            "precio": self.precio,
+            "cod_unidad_medida": self.cod_unidad_medida,
+            "cod_categ_producto": self.cod_categ_producto,
         }
-        self.lista_perfil = await perfil_service.get_perfil_lista(self.request, self.id_usuario_conectado)
-        self.lista_carrera = await carrera_service.get_carrera_lista(self.request, self.id_usuario_conectado)
+        self.lista_unidad_medida = await param_service.get_unidad_medida_lista(self.request)
+        self.lista_categoria_producto = await param_service.get_categoria_producto_lista(self.request)
 
         if await self.validate():
-            # Encriptamos la password antes de pasarla al servicio
-            self.hash_password = hash_text(self.hash_password)
-            self.usuario["hash_password"] = self.hash_password
-
-            self.usuario = await usuario_service.insert_usuario(self.usuario)
+            self.usuario = await producto_service.insert_producto(self.producto)
 
             if not self.usuario:
-                self.msg_error = "Error al agregar el usuario"
+                self.msg_error = "Error al agregar el producto"
             else:
-                self.id_usuario = self.usuario["id_usuario"]
-                self.msg_exito = "Se ha agregado correctamente al usuario"
+                self.id_producto = self.usuario["id_producto"]
+                self.msg_exito = "Se ha agregado correctamente el producto"
 
     async def load(self, id_producto):
         if self.esta_conectado:
