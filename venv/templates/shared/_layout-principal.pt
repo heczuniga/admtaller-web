@@ -80,7 +80,7 @@
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/producto/lista">Productos</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Registro</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/registro/asignatura/lista">Registro</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -121,6 +121,8 @@
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/programacion/asignatura/lista">Programación</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item bg-body-light text-dark" href="/producto/lista">Productos</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/registro/asignatura/lista">Registro</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -153,7 +155,7 @@
                                         Administración
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Registro</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/registro/asignatura/lista">Registro</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">

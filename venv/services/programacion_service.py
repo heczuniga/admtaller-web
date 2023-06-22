@@ -26,8 +26,8 @@ async def get_programaciones_asignatura_lista(ano_academ: int, id_usuario: int) 
             raise Exception(f"Error de conexión con la API respectiva. [{str(e)}]")
 
     # Si todo está correcto, Retornamos la respuesta de la API
-    agrupadores = response.json()
-    return agrupadores
+    programaciones = response.json()
+    return programaciones
 
 
 async def delete_programacion_asignatura(request: Request, ano_academ: int, cod_periodo_academ: int, sigla: str, seccion: int) -> Optional[dict]:
