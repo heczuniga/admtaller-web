@@ -88,7 +88,7 @@
                                         Consultas
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Taller</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/consulta/asignatura/lista">Taller</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -130,7 +130,7 @@
                                         Consultas
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Taller</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/consulta/asignatura/lista">Taller</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -163,7 +163,7 @@
                                         Consultas
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Taller</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/consulta/asignatura/lista">Taller</a></li>
                                     </ul>
                                 </li>
                             </ul>
