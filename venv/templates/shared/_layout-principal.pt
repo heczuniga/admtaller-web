@@ -96,9 +96,9 @@
                                         Reportes
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Valorización estimada de talleres</a></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Presupuesto</a></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Talleres</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/1">Valorización por taller</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/2">Presupuesto estimado por asignatura</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/3">Asignación y registro de docentes</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -138,9 +138,9 @@
                                         Reportes
                                     </a>
                                     <ul class="dropdown-menu bg-body-secondary text-dark">
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Valorización estimada de talleres</a></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Presupuesto</a></li>
-                                        <li><a class="dropdown-item bg-body-light text-dark" href="#">Talleres</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/1">Valorización por taller</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/2">Presupuesto estimado por asignatura</a></li>
+                                        <li><a class="dropdown-item bg-body-light text-dark" href="/reporte/3">Asignación y registro de docentes</a></li>
                                     </ul>
                                 </li>
                             </ul>
