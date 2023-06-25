@@ -156,7 +156,7 @@ async def taller_get_empty(request: Request, sigla: str):
 
 @router.post("/asignatura/{sigla}/taller")
 @template(template_file="asignatura/taller.pt")
-async def taller_post(request: Request):
+async def taller_post(request: Request, sigla: str):
     # Cargamos el view model el cual recupera los datos del formulario respectivo y realiza validaciones
     vm = TallerViewModel(request)
     await vm.insert()
@@ -166,7 +166,7 @@ async def taller_post(request: Request):
         return vm.to_dict()
 
     # Se carga el formulario con los datos
-    await vm.load(id_taller=vm.id_taller)
+    await vm.load(sigla=sigla, id_taller=vm.id_taller)
 
     # Se retorna el diccionario entregado por el redirect hacia la página principal
     return vm.to_dict()

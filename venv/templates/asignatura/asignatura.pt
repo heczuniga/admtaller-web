@@ -112,7 +112,7 @@
                                           
                                         <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
                                         <a class="btn btn-secondary" href="/asignatura/lista" role="button">Volver</a>
-                                        <a class="btn btn-dark" href="/asignatura/${asignatura.sigla}/taller/lista" role="button">Configurar</a>
+                                        <a tal:condition="asignatura.sigla != 'None'" class="btn btn-dark" href="/asignatura/${asignatura.sigla}/taller/lista" role="button">Configurar</a>
 
                                     </form>
                                     <div id="msg-error-local" class="alert alert-danger" role="alert">

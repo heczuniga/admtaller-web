@@ -7,13 +7,10 @@
         $('#msg-error-local').hide();
 
         $('#formulario').submit(function(e) {
-            var idUsuario = $('#id-usuario').val();
-            var password = $('#password').val();
-            var confirmacionPassword = $('#confirmacion-password').val();
-
-            if ((idUsuario === 0) && (password.trim().length === 0) && (confirmacionPassword.trim().length !== 0)) {
+            let detalle_preparacion = $('#detalle-preparacion').val();
+            if (detalle_preparacion.trim().length === 0) {
                 // Mostrar mensaje de error en la zona de errores
-                var mensajeError = "<b>Error</b>: Debe ingresar la contraseña al usuario"
+                var mensajeError = "<b>Error</b>: Debe especificar un detalle de la preparación."
 
                 $('#msg-error-local').show();
                 $('#msg-error-local').html(mensajeError);
@@ -21,15 +18,6 @@
                 e.preventDefault(); // Evitar el envío del formulario
             }
 
-            if ((password !== confirmacionPassword) && ((password.trim().length !== 0) || (confirmacionPassword.trim().length !== 0))) {
-                // Mostrar mensaje de error en la zona de errores
-                var mensajeError = "<b>Error</b>: La confirmación de la contraseña no coincide"
-
-                $('#msg-error-local').show();
-                $('#msg-error-local').html(mensajeError);
-
-                e.preventDefault(); // Evitar el envío del formulario
-            }
         });
 
       /* Leemos el mensaje para determinar si viene desde la grabación del formulario y mostrar el mensaje de grabación o no */
@@ -121,7 +109,7 @@
 
                                         <button type="submit" class="btn btn-warning" id="enviar">Guardar</button>
                                         <a class="btn btn-secondary" href="/asignatura/${taller.sigla}/taller/lista" role="button">Volver</a>
-                                        <a class="btn btn-dark" href="/asignatura/${taller.sigla}/taller/${taller.id_taller}/producto/lista" role="button">Configurar</a>
+                                        <a tal:condition="taller.id_taller!=0" class="btn btn-dark" href="/asignatura/${taller.sigla}/taller/${taller.id_taller}/producto/lista" role="button">Configurar</a>
 
                                     </form>
                                     <div id="msg-error-local" class="alert alert-danger" role="alert">aller

@@ -22,12 +22,13 @@ class ProductoTallerViewModel(ViewModelBase):
         self.id_taller: int
         self.nom_producto: int
         self.nom_agrupador: str
+        self.nom_unidad_medida: str
 
         self.producto: dict
         self.taller: dict
         self.lista_productos: List[dict]
         self.lista_agrupadores: List[dict]
-        
+
     async def validate(self) -> bool:
         result: bool = True
 
@@ -48,6 +49,7 @@ class ProductoTallerViewModel(ViewModelBase):
             self.producto = await taller_service.get_producto_taller(id_taller, K_NUEVOREGISTRO, K_NUEVOREGISTRO)
             self.nom_producto = self.producto["nom_producto"]
             self.nom_agrupador = self.producto["nom_agrupador"]
+            self.nom_unidad_medida = self.producto["nom_unidad_medida"]
             self.cantidad = self.producto["cantidad"]
             self.lista_productos = await producto_service.get_lista_productos(self.id_usuario_conectado)
             self.lista_agrupadores = await taller_service.get_lista_agrupadores()
@@ -121,6 +123,7 @@ class ProductoTallerViewModel(ViewModelBase):
             self.nom_producto = self.producto["nom_producto"]
             self.nom_agrupador = self.producto["nom_agrupador"]
             self.cantidad = self.producto["cantidad"]
+            self.nom_unidad_medida = self.producto["nom_unidad_medida"]
             self.lista_productos = await producto_service.get_lista_productos(self.id_usuario_conectado)
             self.lista_agrupadores = await taller_service.get_lista_agrupadores()
         else:

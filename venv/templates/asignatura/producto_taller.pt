@@ -76,17 +76,17 @@
                                         <input name="sigla" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${sigla}" required maxlength="40">
 
                                         <div class="row pb-3">
-                                            <div class="col-4">
+                                            <div class="col-5">
                                                 <div class="form-group">
                                                     <label for="producto" class="form-label">Producto</label>
                                                     <select tal:condition="id_producto==0 and cod_agrupador==0" name="id-producto" class="form-select" aria-label="Default select example">
-                                                        <option tal:repeat="p lista_productos" tal:attributes="value p.id_producto; selected python:str(p.id_producto) == str(id_producto) and 'selected' or None">${p.nom_producto}</option>
+                                                        <option tal:repeat="p lista_productos" tal:attributes="value p.id_producto; selected python:str(p.id_producto) == str(id_producto) and 'selected' or None">${p.nom_producto} - [${p.nom_unidad_medida}]</option>
                                                     </select>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="nom-producto" maxlength="40" type="text" class="form-control" id="cod-" aria-describedby="emailHelp" value="${nom_producto}" required maxlength="40" readonly disabled>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="id-producto" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_producto}" required maxlength="40">
+                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="nom-producto" maxlength="40" type="text" class="form-control" id="cod-" aria-describedby="emailHelp" value="${nom_producto} - [${nom_unidad_medida}]" required maxlength="40" readonly disabled>
+                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="id-producto" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_producto} - [${nom_unidad_medida}]" required maxlength="40">
                                                 </div>
                                             </div>
-                                            <div class="col-8"></div>
+                                            <div class="col-7"></div>
                                         </div>
 
                                         <div class="row pb-3">
@@ -107,7 +107,7 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label for="cantidad" class="form-label">Cantidad</label>
-                                                    <input name="cantidad" step="0.01" maxlength="2" type="number" class="form-control" id="semana" aria-describedby="emailHelp" value="${cantidad}" required min="1">
+                                                    <input name="cantidad" step="0.01" maxlength="2" type="number" class="form-control" id="cantidad" aria-describedby="emailHelp" value="${cantidad}" required min="0.01">
                                                 </div>
                                             </div>
                                             <div class="col-10"></div>

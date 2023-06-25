@@ -13,6 +13,7 @@ from views import programacion
 from views import producto
 from views import registro
 from views import consulta
+from views import reporte
 
 app = fastapi.FastAPI()
 
@@ -32,6 +33,7 @@ def configura_routers():
     app.include_router(producto.router)
     app.include_router(registro.router)
     app.include_router(consulta.router)
+    app.include_router(reporte.router)
 
 
 # Método de configuración de templates
