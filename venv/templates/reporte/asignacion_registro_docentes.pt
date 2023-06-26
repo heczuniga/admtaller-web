@@ -20,10 +20,10 @@
 
                         <div class="row">
                             <div class="col-1">
-                                <a href="/reporte/2/pdf" type="button" class="btn btn-warning mb-3" style="width: 100px">PDF</a>
+                                <a href="/reporte/3/pdf" type="button" class="btn btn-warning mb-3" style="width: 100px">PDF</a>
                             </div>
                             <div class="col-1">
-                                <a href="/reporte/2/excel" type="button" class="btn btn-warning mb-3" style="width: 100px">Excel</a>
+                                <a href="/reporte/3/excel" type="button" class="btn btn-warning mb-3" style="width: 100px">Excel</a>
                             </div>
                             <div class="col-10">
                             </div>
@@ -54,7 +54,8 @@
                                     <td>${r.nom_periodo_academ}</td>
                                     <td class="text-center">${r.total_taller_asignado}</td>
                                     <td class="text-center">${r.total_taller_registrado}</td>
-                                    <td class="text-center">${r.porcentaje_registro}</td>
+                                    <td tal:condition="r.total_taller_registrado!=0" class="text-center">${int(r.porcentaje_registro*100)}%</td>
+                                    <td tal:condition="r.total_taller_registrado==0" class="text-center">-</td>
                                     <td>
                                         <a tal:condition="r.total_taller_asignado!=0" href="/registro/asignatura/${r.sigla}/periodo/${r.cod_periodo_academ}/seccion/${r.seccion}/lista"><button type="button" class="btn btn-dark" style="width: 120px">Consultar</button></a>
                                     </td>
