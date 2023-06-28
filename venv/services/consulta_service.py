@@ -1,12 +1,6 @@
 
 from typing import Optional
 from typing import List
-import httpx
-from httpx import Request
-from httpx import Response
-from infrastructure.constants import APITaller
-from infrastructure import cookie_autoriz
-from fastapi import status
 
 
 # Transformamos esta lista de productos en el diccionario que requiere la consulta, es decir, agrupada

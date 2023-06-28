@@ -1,14 +1,10 @@
 
 from typing import Optional
 import httpx
-from httpx import Request
 from httpx import Response
 from infrastructure.constants import APITaller
-from infrastructure import cookie_autoriz
 from fastapi import status
-from datetime import datetime
 from infrastructure.conversion import texto_fecha_formato_corto
-from infrastructure.conversion import texto_fecha_formato_largo
 
 
 async def get_registros_asignatura_lista(ano_academ: int, id_usuario: int) -> Optional[dict]:

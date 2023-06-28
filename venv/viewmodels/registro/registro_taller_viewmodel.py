@@ -1,8 +1,4 @@
 
-from typing import List
-from typing import Optional
-from datetime import date
-
 from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import asignatura_service

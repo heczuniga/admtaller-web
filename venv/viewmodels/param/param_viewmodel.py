@@ -1,5 +1,4 @@
 
-from typing import List
 from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import param_service

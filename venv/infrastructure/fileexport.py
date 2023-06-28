@@ -2,7 +2,6 @@
 import pandas as pd
 import io
 from fpdf import FPDF
-import math
 
 
 async def generar_excel(datos):

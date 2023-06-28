@@ -6,7 +6,6 @@ from httpx import Response
 from infrastructure.constants import APITaller
 from infrastructure import cookie_autoriz
 from fastapi import status
-from datetime import datetime
 from infrastructure.conversion import texto_fecha_formato_corto
 from infrastructure.conversion import texto_fecha_formato_largo
 
@@ -169,6 +168,7 @@ async def update_programacion_taller(request: Request, programacion: dict) -> Op
     # Si todo está correcto, Retornamos la respuesta de la API
     programacion = response.json()
     return programacion
+
 
 async def insert_programacion_taller(programacion: dict) -> Optional[dict]:
     # Armamos la URL de la API respectiva

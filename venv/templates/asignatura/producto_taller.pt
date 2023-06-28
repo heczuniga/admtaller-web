@@ -83,7 +83,7 @@
                                                         <option tal:repeat="p lista_productos" tal:attributes="value p.id_producto; selected python:str(p.id_producto) == str(id_producto) and 'selected' or None">${p.nom_producto} - [${p.nom_unidad_medida}]</option>
                                                     </select>
                                                     <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="nom-producto" maxlength="40" type="text" class="form-control" id="cod-" aria-describedby="emailHelp" value="${nom_producto} - [${nom_unidad_medida}]" required maxlength="40" readonly disabled>
-                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="id-producto" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_producto} - [${nom_unidad_medida}]" required maxlength="40">
+                                                    <input tal:condition="id_producto!=0 or cod_agrupador!=0" name="id-producto" maxlength="40" type="hidden" class="form-control" id="cod-" aria-describedby="emailHelp" value="${id_producto}" required maxlength="40">
                                                 </div>
                                             </div>
                                             <div class="col-7"></div>

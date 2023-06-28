@@ -4,11 +4,7 @@ from starlette.requests import Request
 from viewmodels.shared.viewmodel import ViewModelBase
 from services import param_service
 from services import producto_service
-from services import carrera_service
-from services import perfil_service
-from services import usuario_service
 from infrastructure.constants import Mensajes
-from infrastructure.hash import hash_text
 
 
 class ProductoViewModel(ViewModelBase):

@@ -4,9 +4,6 @@ import httpx
 from httpx import Request
 from httpx import Response
 from infrastructure.constants import APITaller
-from infrastructure import cookie_autoriz
-from infrastructure.hash import hash_text
-from fastapi import status
 
 
 async def get_params_lista(id_usuario: int) -> Optional[dict]:
