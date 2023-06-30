@@ -1,10 +1,11 @@
 
+from typing import List
 import pandas as pd
 import io
 from fpdf import FPDF
 
 
-async def generar_excel(datos):
+async def generar_excel(datos: List[dict]):
     # Crear un DataFrame desde los datos
     df = pd.DataFrame(datos)
 
@@ -16,7 +17,7 @@ async def generar_excel(datos):
     return excel_file.getvalue()
 
 
-async def generar_pdf(datos, filename):
+async def generar_pdf(datos: List[dict], titulo: str, subtitulo: str = None):
     # Crear el objeto PDF
     pdf = FPDF(orientation='L')
 
@@ -28,7 +29,7 @@ async def generar_pdf(datos, filename):
 
     # Recorrer la lista de datos y agregar cada elemento en una línea separada
     indice = 0
-    K_REGISTROS_PAGINA = 16
+    K_REGISTROS_PAGINA = 14
     for item in datos:
         texto = ""
 
@@ -38,9 +39,16 @@ async def generar_pdf(datos, filename):
 
             # Título del reporte
             pdf.set_font("Arial", style="B", size=16)
-            texto += f"{filename.upper()}"
+            texto += f"{titulo.upper()}"
             pdf.cell(40, 10, txt=texto, ln=True)
             texto = ""
+
+            # Subtítulo del reporte si es que viene definido
+            if subtitulo:
+                pdf.set_font("Arial", style="B", size=14)
+                texto += subtitulo
+                pdf.cell(40, 10, txt=texto, ln=True)
+                texto = ""
 
             # Encabezado del reporte
             for clave, valor in item.items():
@@ -60,10 +68,10 @@ async def generar_pdf(datos, filename):
         indice += 1
 
     # Guardar el archivo PDF en un archivo temporal
-    pdf.output(filename)
+    pdf.output(titulo)
 
     # Leer el contenido del archivo
-    with open(filename, "rb") as file:
+    with open(titulo, "rb") as file:
         pdf_content = file.read()
 
     return pdf_content

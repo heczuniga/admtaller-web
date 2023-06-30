@@ -85,11 +85,11 @@ async def reporte_valorizacion_taller_pdf(request: Request):
     await vm.load()
 
     # Generar el archivo PDF
-    filename = "Reporte valorización talleres"
-    pdf_content = await generar_pdf(vm.registros, filename)
+    titulo = "Reporte valorización talleres"
+    pdf_content = await generar_pdf(datos=vm.registros, titulo=titulo)
 
     # Devolver el PDF como una respuesta
-    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + filename + ".pdf"})
+    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + titulo + ".pdf"})
 
 
 @router.get("/reporte/2/pdf")
@@ -98,11 +98,12 @@ async def reporte_presupuesto_estimado_asignatura_pdf(request: Request):
     await vm.load()
 
     # Generar el archivo PDF
-    filename = "Reporte presupuesto estimado asignaturas"
-    pdf_content = await generar_pdf(vm.registros, filename)
+    titulo = "Reporte presupuesto estimado asignaturas"
+    subtitulo = f"Año académico {vm.ano_academ}"
+    pdf_content = await generar_pdf(datos=vm.registros, titulo=titulo, subtitulo=subtitulo)
 
     # Devolver el PDF como una respuesta
-    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + filename + ".pdf"})
+    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + titulo + ".pdf"})
 
 
 @router.get("/reporte/3/pdf")
@@ -111,8 +112,9 @@ async def reporte_asignacion_registro_docentes_pdf(request: Request):
     await vm.load()
 
     # Generar el archivo PDF
-    filename = "Reporte asignación-registro docentes"
-    pdf_content = await generar_pdf(vm.registros, filename)
+    titulo = "Reporte asignación-registro docentes"
+    subtitulo = f"Año académico {vm.ano_academ}"
+    pdf_content = await generar_pdf(datos=vm.registros, titulo=titulo, subtitulo=subtitulo)
 
     # Devolver el PDF como una respuesta
-    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + filename + ".pdf"})
+    return Response(content=pdf_content, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=" + titulo + ".pdf"})

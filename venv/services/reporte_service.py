@@ -58,7 +58,7 @@ async def get_reporte_asignacion_registro_docentes(cod_reporte: int, ano_academ:
 
     # Calculamos porcentaje de avance en el registro
     for row in reporte:
-        row["porcentaje_registro"] = None if row["total_taller_asignado"]==0 else round(row["total_taller_registrado"] / row["total_taller_asignado"], 2)
+        row["porcentaje_registro"] = None if row["total_taller_asignado"] == 0 else round(row["total_taller_registrado"] / row["total_taller_asignado"], 2)
 
     # Si todo está correcto, Retornamos la respuesta de la API
     return reporte
